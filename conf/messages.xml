@@ -1930,7 +1930,17 @@
     <field name="diff"         type="float"/>
   </message>
 
- <!--222 is free -->
+ <message name="ARDUINO_MEASURMENTS" id="222">
+   <field name="val0" type="uint16"/>
+   <field name="val1" type="uint16"/>
+   <field name="val2" type="uint16"/>
+   <field name="val3" type="uint16"/>
+   <field name="val4" type="uint16"/>
+   <field name="val5" type="uint16"/>
+   <field name="val6" type="uint16"/>
+   <field name="val7" type="uint16"/>
+ </message>
+
  <!--223 is free -->
  <!--224 is free -->
  <!--225 is free -->
