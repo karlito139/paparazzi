@@ -46,47 +46,29 @@ void ArduInit(void){
 
 void Get_ADCSValues(void){
 
+	while(UART1Getch() != 0xAA);  //All the packets starts with 0xAA
+	if(UART1Getch() == 0x55){     //Followed by 0x55
 
-/*
-	while(UART1Getch() != 0xAA);
-	trame[0] = 0xAA;
-	trame[1] = UART1Getch();
-	trame[2] = UART1Getch();
-	trame[3] = UART1Getch();
-	trame[4] = UART1Getch();
-	trame[5] = 0;
+		packetSize = UART1Getch();  //We then get the packet size (in bytes)
 
-	trame[3] = (trame[3]<<8)+trame[4];
-
-	DOWNLINK_SEND_ADC_GENERIC(DefaultChannel, DefaultDevice, &trame[0], &trame[1], &trame[2], &trame[3], &trame[4], &trame[5]);
-*/
-
-
-	while(UART1Getch() != 0xAA);
-	if(UART1Getch() == 0x55){
-		packetSize = UART1Getch();
-		for(i = 0; i<packetSize; i++){
+		for(i = 0; i<packetSize; i++){  //We retrieve the corresponding data
 
 			data_in[i] = UART1Getch();	
 		}
 
-		//todo change that division per 2 by a shift
-		for(i=0; i < (packetSize/2); i++){
+    //As far as the values we get are 8 bits we need to merge then two by two
+    // to actualy get the measured values
+		for(i=0; i < (packetSize >> 1); i++){
 
-			values[i] = (data_in[i*2]<<8)+data_in[i*2+1];
+			values[i] = (data_in[i<<1]<<8)+data_in[(i<<1)+1];
 		}
 
-		//We now have receaved the full packet we need to interpret it.
-		//tmp = (data_in[0]<<8)+data_in[1];
-
-
+    //We then just got to send those values in the telemetry
 		DOWNLINK_SEND_ARDUINO_MEASURMENTS(DefaultChannel, DefaultDevice, 
 			&values[0], &values[1], &values[2], &values[3], &values[4], &values[5], 
 			&values[6], &values[7]);
 
 	}
-
-
 
 }
 
