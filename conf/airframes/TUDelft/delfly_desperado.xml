@@ -55,7 +55,6 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     </subsystem>
 
     <subsystem name="ahrs" type="float_dcm"/>
-    <!--<subsystem name="ahrs" type="int_cmpl_quat"/>-->
     <subsystem name="control"/>
     <subsystem name="navigation"/>
     <subsystem name="ins" type="alt_float"/>
@@ -65,10 +64,11 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <!--<load name="baro_sim.xml"/>-->
     <!--<load name="servo_switch.xml"/>-->
    <load name="gps_ubx_ucenter.xml"/>
+<!--<load name="geo_init"/>-->
   </modules>
 
   <servos driver="Pwm">
-    <servo name="MOTOR" no="4" min="1100" neutral="1100" max="2000"/> <!-- 1148-1832 -->
+    <servo name="MOTOR" no="4" min="1100" neutral="1100" max="1900"/> <!-- 1148-1832 -->
   </servos>
 
   <!-- comboPWM / mergedPWM / -->
@@ -92,7 +92,7 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
   </rc_commands>
 
   <section name="MIXER">
-    <define name="AILEVON_AILERON_RATE" value="-0.75"/>
+    <define name="AILEVON_AILERON_RATE" value="0.75"/>
     <define name="AILEVON_ELEVATOR_RATE" value="0.75"/>
   </section>
 
@@ -126,24 +126,20 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
 <define name="ACCEL_Y_NEUTRAL" value="0"/>
 <define name="ACCEL_Z_NEUTRAL" value="0"/>
 
-<!--<define name="ACCEL_X_SENS" value="4.905" integer="16"/>
+<define name="ACCEL_X_SENS" value="4.905" integer="16"/>
 <define name="ACCEL_Y_SENS" value="4.905" integer="16"/>
-<define name="ACCEL_Z_SENS" value="4.905" integer="16"/>-->
+<define name="ACCEL_Z_SENS" value="4.905" integer="16"/>
 
-<define name="ACCEL_X_SENS" value="-4.905" integer="16"/>
-<define name="ACCEL_Y_SENS" value="-4.905" integer="16"/>
-<define name="ACCEL_Z_SENS" value="-4.905" integer="16"/>
-
-    <!--<define name="MAG_X_NEUTRAL" value="847"/>
+<!--<define name="MAG_X_NEUTRAL" value="847"/>
 <define name="MAG_Y_NEUTRAL" value="-415"/>
 <define name="MAG_Z_NEUTRAL" value="-264"/>
 <define name="MAG_X_SENS" value="2.43585513661" integer="16"/>
 <define name="MAG_Y_SENS" value="3.71461295002" integer="16"/>
 <define name="MAG_Z_SENS" value="3.4639003008" integer="16"/>-->
 
-    <define name="BODY_TO_IMU_PHI" value="-90." unit="deg"/> <!-- Roll : -90; 90 -->
-    <define name="BODY_TO_IMU_THETA" value="180." unit="deg"/> <!-- pitch 180; -10 -->
-    <define name="BODY_TO_IMU_PSI" value="0." unit="deg"/> <!-- Yaw 0; 180 -->
+    <define name="BODY_TO_IMU_PHI" value="-90." unit="deg"/> <!-- Roll -->
+    <define name="BODY_TO_IMU_THETA" value="-165." unit="deg"/> <!-- pitch -->
+    <define name="BODY_TO_IMU_PSI" value="0." unit="deg"/> <!-- Yaw -->
   </section>
 
 
