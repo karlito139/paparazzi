@@ -25,6 +25,8 @@
 
 extern void ArduInit(void);
 extern void Get_ADCSValues(void);
+extern int fireswarm_payload_link_has_data(void);
+extern uint8_t get_uart_char(void);
 
 #endif
 
