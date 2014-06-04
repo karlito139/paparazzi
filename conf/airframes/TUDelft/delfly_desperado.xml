@@ -7,7 +7,7 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
 <airframe name="Delfly Lisa/S 0.1">
 
   <firmware name="fixedwing"> <!-- -->
-    <target name="ap" board="lisa_s_0.1">
+    <target name="ap" board="lisa_s_1.0">
       <subsystem name="radio_control" type="superbitrf_rc">
         <!-- TUDelft Dx6i: TX 4 1974942194, TX 5 692352099, the superbitrf dongle : 2008496626 -->
         <!-- graupner (orange RX) : 3327503026, graupner (spektrum 9) : 4095452533 -->
@@ -39,7 +39,7 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
 
 
     <!-- Sensors -->
-    <subsystem name="imu" type="lisa_s_v0.1"/>
+    <subsystem name="imu" type="lisa_s_v1.0"/>
     <subsystem name="gps" type="ublox">
       <configure name="GPS_PORT" value="UART3"/>
       <configure name="GPS_BAUD" value="B38400"/>
