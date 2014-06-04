@@ -286,8 +286,9 @@ test_baro_board.srcs   += $(COMMON_TELEMETRY_SRCS)
 test_baro_board.srcs += subsystems/air_data.c
 test_baro_board.srcs += test/test_baro_board.c
 test_baro_board.srcs += mcu_periph/i2c.c $(SRC_ARCH)/mcu_periph/i2c_arch.c
-
+ifeq ($(TARGET),test_baro_board)
 include $(CFG_SHARED)/baro_board.makefile
+endif
 test_baro_board.CFLAGS += $(BARO_BOARD_CFLAGS)
 test_baro_board.srcs += $(BARO_BOARD_SRCS)
 
@@ -327,3 +328,16 @@ test_imu.srcs   += $(COMMON_TELEMETRY_SRCS)
 test_imu.srcs   += mcu_periph/i2c.c $(SRC_ARCH)/mcu_periph/i2c_arch.c
 test_imu.srcs   += test/subsystems/test_imu.c
 test_imu.srcs   += math/pprz_trig_int.c
+
+
+#
+# test_radio_control
+#
+# add appropriate radio_control subsystem to target!
+#
+test_radio_control.ARCHDIR = $(ARCH)
+test_radio_control.CFLAGS += $(COMMON_TEST_CFLAGS)
+test_radio_control.srcs   += $(COMMON_TEST_SRCS)
+test_radio_control.CFLAGS += $(COMMON_TELEMETRY_CFLAGS)
+test_radio_control.srcs   += $(COMMON_TELEMETRY_SRCS)
+test_radio_control.srcs   += test/subsystems/test_radio_control.c
