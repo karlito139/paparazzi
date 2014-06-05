@@ -120,10 +120,6 @@ void Get_ADCSValues(void){
 	uint16_t nbrMsg = 0;
 	uint8_t ret;
 
-	//cpt=10;
-
-	//UART1Getch();
-
 	while(fireswarm_payload_link_has_data()>10){
 
 		cpt = 0;
@@ -138,6 +134,16 @@ void Get_ADCSValues(void){
 		ret = read(sim_uart_p, &cpt2, 1);
 
 		values[7] = (cpt<<8)+cpt2;
+
+		ret = read(sim_uart_p, &cpt, 1);
+		ret = read(sim_uart_p, &cpt2, 1);
+
+		values[0] = (cpt<<8)+cpt2;
+
+		ret = read(sim_uart_p, &cpt, 1);
+		ret = read(sim_uart_p, &cpt2, 1);
+
+		values[1] = (cpt<<8)+cpt2;
 
 		DOWNLINK_SEND_ARDUINO_MEASURMENTS(DefaultChannel, DefaultDevice, 
 			&values[0], &values[1], &values[2], &values[3], &values[4], &values[5], 
