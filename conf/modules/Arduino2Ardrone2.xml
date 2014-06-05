@@ -3,6 +3,9 @@
 <module name="Arduino2Ardrone2">
   <doc>
     <description>Module arduino to ardrone</description>
+    <define name="Arduino2Ardrone2_CURRENT_SCALE" value="scale" description="sensor scale factor for current"/>
+    <define name="Arduino2Ardrone2_VOLTAGE_SCALE" value="scale" description="sensor scale factor for voltage"/>
+    <define name="Arduino2Ardrone2_RPM_SCALE" value="scale" description="sensor scale factor for RPM"/>
   </doc>
   <header>
     <file name="Arduino2Ardrone2.h"/>

@@ -35,6 +35,19 @@
 #include <sys/termios.h>
 #include <sys/ioctl.h>
 
+#ifndef Arduino2Ardrone2_CURRENT_SCALE
+ #define Arduino2Ardrone2_CURRENT_SCALE 1 
+#endif
+
+#ifndef Arduino2Ardrone2_VOLTAGE_SCALE
+ #define Arduino2Ardrone2_VOLTAGE_SCALE 1 
+#endif
+
+#ifndef Arduino2Ardrone2_RPM_SCALE
+ #define Arduino2Ardrone2_RPM_SCALE 1 
+#endif
+
+
 uint16_t cara1, cara2;
 
 uint16_t i, packetSize;
@@ -120,7 +133,7 @@ void Get_ADCSValues(void){
 	uint16_t nbrMsg = 0;
 	uint8_t ret;
 
-	while(fireswarm_payload_link_has_data()>10){
+	while(fireswarm_payload_link_has_data()>20){
 
 		cpt = 0;
 		ret = read(sim_uart_p, &cpt, 1);
@@ -133,21 +146,20 @@ void Get_ADCSValues(void){
 		ret = read(sim_uart_p, &cpt, 1);
 		ret = read(sim_uart_p, &cpt2, 1);
 
-		values[7] = (cpt<<8)+cpt2;
+		values[7] = ((cpt<<8)+cpt2)*1.0*Arduino2Ardrone2_RPM_SCALE;
 
 		ret = read(sim_uart_p, &cpt, 1);
 		ret = read(sim_uart_p, &cpt2, 1);
 
-		values[0] = (cpt<<8)+cpt2;
+		values[0] = (((cpt<<8)+cpt2)-10000)*1.0*Arduino2Ardrone2_VOLTAGE_SCALE;
 
 		ret = read(sim_uart_p, &cpt, 1);
 		ret = read(sim_uart_p, &cpt2, 1);
 
-		values[1] = (cpt<<8)+cpt2;
+		values[1] = (((cpt<<8)+cpt2)-10000)*1.0*Arduino2Ardrone2_CURRENT_SCALE;
 
 		DOWNLINK_SEND_ARDUINO_MEASURMENTS(DefaultChannel, DefaultDevice, 
-			&values[0], &values[1], &values[2], &values[3], &values[4], &values[5], 
-			&values[6], &values[7]);
+			&values[0], &values[1], &values[7]);
 	}
 }
 

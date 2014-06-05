@@ -63,17 +63,17 @@ endif
 # Number of processes can also be explicitly set with e.g. J=4
 # Calling make without a J variable is the same as J=1 (serial compilation)
 NPROCS := 1
-ifdef J
-ifeq ($J,AUTO)
+#ifdef J
+#ifeq ($J,AUTO)
 ifeq ($(UNAME),Linux)
   NPROCS := $(shell grep -c ^processor /proc/cpuinfo)
 else ifeq ($(UNAME),Darwin)
   NPROCS := $(shell sysctl hw.ncpu | awk '{print $$2}')
 endif # $(UNAME)
-else # not auto, explicitly specified
-  NPROCS := $J
-endif # $J
-endif
+#else # not auto, explicitly specified
+#  NPROCS := $J
+#endif # $J
+#endif
 
 
 # "make Q=''" to get full echo
