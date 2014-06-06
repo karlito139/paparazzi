@@ -63,8 +63,8 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
   <modules>
     <!--<load name="baro_sim.xml"/>-->
     <!--<load name="servo_switch.xml"/>-->
-   <load name="gps_ubx_ucenter.xml"/>
-<!--<load name="geo_init"/>-->
+    <load name="gps_ubx_ucenter.xml"/>
+    <!--<load name="geo_init"/>-->
   </modules>
 
   <servos driver="Pwm">
