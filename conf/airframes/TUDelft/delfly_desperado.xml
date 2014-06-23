@@ -54,7 +54,9 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
       <define name="DUAL_PWM_ON"/>
     </subsystem>
 
-    <subsystem name="ahrs" type="float_dcm"/>
+    <!--<subsystem name="ahrs" type="float_dcm"/>-->
+    <subsystem name="ahrs" type="int_cmpl_quat"/>
+    <configure name="USE_MAGNETOMETER" value="TRUE"/>
     <subsystem name="control"/>
     <subsystem name="navigation"/>
     <subsystem name="ins" type="alt_float"/>
@@ -130,12 +132,12 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
 <define name="ACCEL_Y_SENS" value="4.905" integer="16"/>
 <define name="ACCEL_Z_SENS" value="4.905" integer="16"/>
 
-<!--<define name="MAG_X_NEUTRAL" value="847"/>
+<define name="MAG_X_NEUTRAL" value="847"/>
 <define name="MAG_Y_NEUTRAL" value="-415"/>
 <define name="MAG_Z_NEUTRAL" value="-264"/>
 <define name="MAG_X_SENS" value="2.43585513661" integer="16"/>
 <define name="MAG_Y_SENS" value="3.71461295002" integer="16"/>
-<define name="MAG_Z_SENS" value="3.4639003008" integer="16"/>-->
+<define name="MAG_Z_SENS" value="3.4639003008" integer="16"/>
 
     <define name="BODY_TO_IMU_PHI" value="-104." unit="deg"/> <!-- Roll -->
     <define name="BODY_TO_IMU_THETA" value="-165." unit="deg"/> <!-- pitch : true value : 180; add 15° of pitching up : -165 -->
