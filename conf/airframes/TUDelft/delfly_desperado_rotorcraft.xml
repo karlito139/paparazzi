@@ -149,12 +149,19 @@
     <define name="ACCEL_Z_NEUTRAL" value="0"/>
 
     <!-- MAGNETO CALIBRATION DELFT -->
-<define name="MAG_X_NEUTRAL" value="-269"/>
+<!--<define name="MAG_X_NEUTRAL" value="-269"/>
 <define name="MAG_Y_NEUTRAL" value="52"/>
 <define name="MAG_Z_NEUTRAL" value="294"/>
 <define name="MAG_X_SENS" value="3.94342959085" integer="16"/>
 <define name="MAG_Y_SENS" value="2.55105894066" integer="16"/>
-<define name="MAG_Z_SENS" value="3.91555081627" integer="16"/>
+<define name="MAG_Z_SENS" value="3.91555081627" integer="16"/>-->
+
+<define name="MAG_X_NEUTRAL" value="-362"/>
+<define name="MAG_Y_NEUTRAL" value="150"/>
+<define name="MAG_Z_NEUTRAL" value="356"/>
+<define name="MAG_X_SENS" value="3.65705733914" integer="16"/>
+<define name="MAG_Y_SENS" value="3.84740568459" integer="16"/>
+<define name="MAG_Z_SENS" value="3.98971926329" integer="16"/>
 
 
 
