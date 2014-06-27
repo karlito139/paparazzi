@@ -174,12 +174,30 @@
 
   <section name="AUTOPILOT">
     <define name="MODE_STARTUP" value="AP_MODE_ATTITUDE_DIRECT"/>
-    <define name="MODE_MANUAL" value="AP_MODE_RC_DIRECT"/>
-    <define name="MODE_AUTO1" value="AP_MODE_ATTITUDE_DIRECT"/>
+    <define name="MODE_MANUAL" value="AP_MODE_RATE_RC_CLIMB"/>  <!-- AP_MODE_RC_DIRECT -->
+    <define name="MODE_AUTO1" value="AP_MODE_ATTITUDE_RC_CLIMB"/>
     <define name="MODE_AUTO2" value="AP_MODE_NAV"/>
 
     <define name="NO_RC_THRUST_LIMIT" value="TRUE"/>
   </section>
+
+<!--
+x AP_MODE_FAILSAFE (SAFE) 
+x AP_MODE_KILL (KILL) 
+x AP_MODE_RATE_DIRECT (RATE) 
+x AP_MODE_ATTITUDE_DIRECT (ATT) 
+x AP_MODE_RATE_RC_CLIMB (R_RCC) 
+  AP_MODE_ATTITUDE_RC_CLIMB (A_RCC) 
+  AP_MODE_ATTITUDE_CLIMB (ATT_C) 
+  AP_MODE_RATE_Z_HOLD (R_ZH) 
+  AP_MODE_ATTITUDE_Z_HOLD (A_ZH) 
+x AP_MODE_HOVER_DIRECT (HOVER) 
+  AP_MODE_HOVER_CLIMB (HOV_C) 
+  AP_MODE_HOVER_Z_HOLD (H_ZH)
+  AP_MODE_NAV (NAV) 
+  AP_MODE_RC_DIRECT (RC_D) 
+  AP_MODE_CARE_FREE_DIRECT (CF)
+-->
 
   <section name="BAT">
     <define name="MILLIAMP_AT_FULL_THROTTLE" value="14000"/>
