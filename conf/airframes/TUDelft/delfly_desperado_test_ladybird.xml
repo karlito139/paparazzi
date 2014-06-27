@@ -22,19 +22,11 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
       <define name="AUTOPILOT_DISABLE_AHRS_KILL"/>  <!-- NEW -->
     </target>
 
-    <define name="AGR_CLIMB"/>
+    <!--<define name="AGR_CLIMB"/>
     <define name="LOITER_TRIM"/>
-    <define name="STRONG_WIND"/>
+    <define name="STRONG_WIND"/>-->
 
-    <!--<define name="LISA_S_SIDEWAY"/>-->
-
-    <define name="USE_BAROMETER" value="TRUE"/>
-
-    <!-- Communication -->
-    <!--<subsystem name="telemetry" type="transparent">-->
-      <!--<configure name="MODEM_BAUD" value="B57600"/>
-<configure name="MODEM_PORT" value="UART1"/>-->
-    <!--</subsystem>-->
+    <!--<define name="USE_BAROMETER" value="TRUE"/>-->
 
     <subsystem name="telemetry" type="superbitrf"/>
 
@@ -55,17 +47,12 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
       <define name="DUAL_PWM_ON"/>
     </subsystem>
 
-    <!--<subsystem name="ahrs" type="float_dcm"/>-->
-    <!--<subsystem name="ahrs" type="int_cmpl_quat"/>-->
     <subsystem name="ahrs" type="int_cmpl_quat">
       <configure name="USE_MAGNETOMETER" value="1"/>
       <define name="AHRS_USE_GPS_HEADING" value="0"/>
     </subsystem>
 
-    <!--<subsystem name="stabilization" type="int_quat"/>-->
 
-
-    <!--<configure name="USE_MAGNETOMETER" value="TRUE"/>-->
     <subsystem name="control"/>
     <subsystem name="navigation"/>
 
@@ -73,18 +60,14 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
   </firmware>
 
   <modules main_freq="512"> <!-- NEW (512hz) -->
-    <!--<load name="baro_sim.xml"/>-->
-    <!--<load name="servo_switch.xml"/>-->
     <load name="gps_ubx_ucenter.xml"/>
     <load name="send_imu_mag_current.xml"/>  <!-- NEW -->
-    <!--<load name="geo_init"/>-->
   </modules>
 
   <servos driver="Pwm">
-    <servo name="MOTOR" no="4" min="1100" neutral="1100" max="2000"/> <!-- 1148-1832 -->
+    <servo name="MOTOR" no="4" min="1100" neutral="1100" max="2000"/>
   </servos>
 
-  <!-- comboPWM / mergedPWM / -->
   <servos driver="Dualpwm">
     <servo name="LEFT_ELERON" no="2" min="1100" neutral="1500" max="1900"/>
     <servo name="RIGHT_ELERON" no="3" min="1100" neutral="1500" max="1900"/>
@@ -113,11 +96,6 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <let var="aileron" value="@ROLL * AILEVON_AILERON_RATE - @YAW * AILEVON_AILERON_RATE / 2 "/>
     <let var="elevator" value="@PITCH * AILEVON_ELEVATOR_RATE"/>
     <set servo="MOTOR" value="@THROTTLE"/>
-    <!-- V tail configuration -->
-    <!--<set servo="LEFT_ELERON" value="$elevator - $aileron"/>
-<set servo="RIGHT_ELERON" value="$elevator + $aileron"/>-->
-
-    <!-- T tail configuration -->
     <set servo="RIGHT_ELERON" value="$elevator"/>
     <set servo="LEFT_ELERON" value="$aileron"/>
   </command_laws>
@@ -127,21 +105,21 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
   <section name="IMU" prefix="IMU_">
 
     <!-- these gyro and accel calib values are the defaults for aspirin2.1/2.2 -->
-<define name="GYRO_X_NEUTRAL" value="0"/>
+<!--<define name="GYRO_X_NEUTRAL" value="0"/>
 <define name="GYRO_Y_NEUTRAL" value="0"/>
 <define name="GYRO_Z_NEUTRAL" value="0"/>
 
 <define name="GYRO_X_SENS" value="4.359" integer="16"/>
 <define name="GYRO_Y_SENS" value="4.359" integer="16"/>
-<define name="GYRO_Z_SENS" value="4.359" integer="16"/>
+<define name="GYRO_Z_SENS" value="4.359" integer="16"/>-->
 
 <define name="ACCEL_X_NEUTRAL" value="0"/>
 <define name="ACCEL_Y_NEUTRAL" value="0"/>
 <define name="ACCEL_Z_NEUTRAL" value="0"/>
 
-<define name="ACCEL_X_SENS" value="4.905" integer="16"/>
+<!--<define name="ACCEL_X_SENS" value="4.905" integer="16"/>
 <define name="ACCEL_Y_SENS" value="4.905" integer="16"/>
-<define name="ACCEL_Z_SENS" value="4.905" integer="16"/>
+<define name="ACCEL_Z_SENS" value="4.905" integer="16"/>-->
 
 <define name="MAG_X_NEUTRAL" value="360"/>  <!-- 847 -->
 <define name="MAG_Y_NEUTRAL" value="-602"/> <!-- -415 -->
@@ -157,33 +135,8 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
 
 
 
-  <!--<section name="IMU" prefix="IMU_">-->
-    <!-- ACCEL and GYRO calibration left out to take default datasheet values -->
-
-    <!-- replace this with your own mag calibration -->
-    <!--<define name="MAG_X_NEUTRAL" value="-45"/>
-<define name="MAG_Y_NEUTRAL" value="334"/>
-<define name="MAG_Z_NEUTRAL" value="7"/>
-<define name="MAG_X_SENS" value="4.47647816128" integer="16"/>
-<define name="MAG_Y_SENS" value="4.71085671542" integer="16"/>
-<define name="MAG_Z_SENS" value="4.41585354498" integer="16"/>
-
-<define name="BODY_TO_IMU_PHI" value="0." unit="deg"/>
-<define name="BODY_TO_IMU_THETA" value="0." unit="deg"/>
-<define name="BODY_TO_IMU_PSI" value="0." unit="deg"/>
-</section>-->
-
-
-
-
-
 
   <section name="AHRS" prefix="AHRS_">
-
-    <!--<define name="H_X" value=" 0.51562740288882"/>
-<define name="H_Y" value="-0.05707735220832"/>
-<define name="H_Z" value=" 0.85490967783446"/>-->
-
     <!--     Delft magnetic field karlito   -->
     <define name="H_X" value="0.3946524"/> <!-- 0.3770441 -->
     <define name="H_Y" value="-0.0187289"/> <!-- 0.0193986 -->
@@ -199,8 +152,8 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
 
 
   <section name="INS" prefix="INS_">
-    <define name="ROLL_NEUTRAL_DEFAULT" value="0" unit="deg"/>
-    <define name="PITCH_NEUTRAL_DEFAULT" value="0" unit="deg"/>
+    <!--<define name="ROLL_NEUTRAL_DEFAULT" value="0" unit="deg"/>
+    <define name="PITCH_NEUTRAL_DEFAULT" value="0" unit="deg"/>-->
   </section>
 
   <section name="VERTICAL CONTROL" prefix="V_CTL_">
@@ -254,12 +207,12 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <define name="DESCENT_NAV_RATIO" value="1.0"/>
     </section>
 
-  <section name="FAILSAFE" prefix="FAILSAFE_">
+  <!--<section name="FAILSAFE" prefix="FAILSAFE_">
     <define name="DELAY_WITHOUT_GPS" value="2" unit="s"/>
     <define name="DEFAULT_THROTTLE" value="0" unit="%"/>
     <define name="DEFAULT_ROLL" value="0.3" unit="rad"/>
     <define name="DEFAULT_PITCH" value="0.5" unit="rad"/>
-  </section>
+  </section>-->
 
   <section name="AUTO1" prefix="AUTO1_">
     <define name="MAX_ROLL" value="35." unit="deg"/>
@@ -283,7 +236,6 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <define name="DEFAULT_CIRCLE_RADIUS" value="60."/>
 
     <define name="UNLOCKED_HOME_MODE" value="TRUE"/>
-    <!--<define name="RC_LOST_MODE" value="mode_auto2"/>-->
   </section>
 
 </airframe>

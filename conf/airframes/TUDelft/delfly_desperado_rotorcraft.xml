@@ -1,0 +1,283 @@
+<!-- this is a quadrocopter frame equiped with Lisa/S 0.1 and generic china pwm motor controllers -->
+
+<!--
+     Applicable configuration:
+     airframe="airframes/examples/quadrotor_lisa_s.xml"
+     radio="radios/spektrum.xml"
+     telemetry="telemetry/default_rotorcraft.xml"
+     flight_plan="flight_plans/rotorcraft_basic.xml"
+     settings="settings/rotorcraft_basic.xml settings/control/rotorcraft_guidance.xml settings/control/stabilization_att_int.xml settings/control/stabilization_rate.xml"
+-->
+
+<airframe name="quadrotor_lisa_s">
+
+  <firmware name="rotorcraft">
+    <target name="ap" board="lisa_s_1.0">
+      <subsystem name="radio_control" type="superbitrf_rc">
+        <!-- TUDelft Dx6i: TX 4 1974942194, TX 5 692352099, the superbitrf dongle : 2008496626 -->
+        <!-- graupner (orange RX) : 3327503026, graupner (spektrum 9) : 4095452533 -->
+        <define name="RADIO_TRANSMITTER_ID" value="692352099"/>
+        <define name="RADIO_TRANSMITTER_CHAN" value="9"/>
+        <define name="RADIO_TRANSMITTER_PROTOCOL" value="DSM_DSM2_2"/>
+        <define name="RADIO_MODE" value="RADIO_GEAR"/>
+      </subsystem>
+
+      <configure name="AHRS_PROPAGATE_FREQUENCY" value="500"/>
+      <define name="AUTOPILOT_DISABLE_AHRS_KILL" value="TRUE"/>
+      <define name="USE_THROTTLE_FOR_MOTOR_ARMING" value="TRUE"/>
+    </target>
+
+    <target name="nps" board="pc">
+      <subsystem name="fdm" type="jsbsim"/>
+      <subsystem name="radio_control" type="ppm"/>
+    </target>
+
+    <subsystem name="motor_mixing"/>
+
+    <subsystem name="actuators" type="pwm">
+      <define name="SERVO_HZ" value="50"/>
+      <define name="USE_SERVOS_1AND2"/>
+    </subsystem>
+
+    <subsystem name="actuators" type="dualpwm">
+      <define name="DUAL_PWM_ON"/>
+    </subsystem>
+
+    <subsystem name="telemetry" type="superbitrf"/>
+    <subsystem name="imu" type="lisa_s_v1.0">
+    </subsystem>
+    <subsystem name="gps" type="ublox"/>
+    <subsystem name="stabilization" type="int_quat"/>
+    <subsystem name="ahrs" type="int_cmpl_quat">
+      <configure name="USE_MAGNETOMETER" value="FALSE"/>
+
+
+      <!--<define name="AHRS_USE_GPS_HEADING" value="0"/>-->
+    </subsystem>
+
+      <!--<configure name="USE_MAGNETOMETER" value="TRUE"/>-->
+
+
+      <!--<define name="USE_MAGNETOMETER" value="TRUE"/>-->
+
+
+
+    <subsystem name="ins"/>
+  </firmware>
+
+
+  <modules main_freq="512">
+    <load name="gps_ubx_ucenter.xml"/>
+    <load name="send_imu_mag_current.xml"/>
+  </modules>
+
+
+
+  <servos driver="Pwm">
+    <servo name="MOTOR" no="4" min="1100" neutral="1100" max="2000"/>
+  </servos>
+
+  <servos driver="Dualpwm">
+    <servo name="LEFT_ELERON" no="2" min="1100" neutral="1500" max="1900"/>
+    <servo name="RIGHT_ELERON" no="3" min="1100" neutral="1500" max="1900"/>
+  </servos>
+
+  <commands>
+    <axis name="PITCH" failsafe_value="0"/>
+    <axis name="ROLL" failsafe_value="0"/>
+    <axis name="YAW" failsafe_value="0"/>
+    <axis name="THRUST" failsafe_value="0"/>
+  </commands>
+
+  <section name="MIXER">
+    <define name="AILEVON_AILERON_RATE" value="0.75"/>
+    <define name="AILEVON_ELEVATOR_RATE" value="0.75"/>
+  </section>
+
+  <command_laws>
+    <let var="aileron" value="@ROLL * AILEVON_AILERON_RATE - @YAW * AILEVON_AILERON_RATE / 2 "/>
+    <let var="elevator" value="@PITCH * AILEVON_ELEVATOR_RATE"/>
+
+    <set servo="RIGHT_ELERON" value="$elevator"/>
+    <set servo="LEFT_ELERON" value="$aileron"/>
+
+
+    <set servo="MOTOR" value="@THRUST"/>
+
+
+    <!--<call fun="motor_mixing_run(autopilot_motors_on,FALSE,values)"/>
+    <set servo="MOTOR" value="motor_mixing.commands[0]"/>
+    <set servo="LEFT_ELERON" value="motor_mixing.commands[1]"/> 
+    <set servo="RIGHT_ELERON" value="motor_mixing.commands[2]"/> -->
+
+
+  </command_laws>
+
+  <section name="MIXING" prefix="MOTOR_MIXING_">
+
+    <define name="NB_MOTOR" value="0"/>
+
+    <define name="SCALE" value="255"/>
+    <define name="ROLL_COEF" value="{ }"/>
+    <define name="PITCH_COEF" value="{ }"/>
+    <define name="YAW_COEF" value="{ }"/>
+    <define name="THRUST_COEF" value="{ }"/>
+
+    <!--<define name="TRIM_ROLL" value="0"/>
+    <define name="TRIM_PITCH" value="0"/>
+    <define name="TRIM_YAW" value="0"/>
+
+    <define name="NB_MOTOR" value="3"/>
+
+    <define name="SCALE" value="255"/>
+    <define name="ROLL_COEF" value=   "{ 0,   255,  0}"/>
+    <define name="PITCH_COEF" value=  "{ 0,   0,    255}"/>
+    <define name="YAW_COEF" value=    "{ 0,   125,  0}"/>
+    <define name="THRUST_COEF" value= "{ 255, 0,    0}"/>-->
+
+  </section>
+
+
+
+  <section name="IMU" prefix="IMU_">
+    <define name="BODY_TO_IMU_PHI" value="-104." unit="deg"/>
+    <define name="BODY_TO_IMU_THETA" value="-165." unit="deg"/>
+    <define name="BODY_TO_IMU_PSI" value="0." unit="deg"/>
+
+    <define name="ACCEL_X_NEUTRAL" value="0"/>
+    <define name="ACCEL_Y_NEUTRAL" value="0"/>
+    <define name="ACCEL_Z_NEUTRAL" value="0"/>
+
+    <!-- MAGNETO CALIBRATION DELFT -->
+    <define name="MAG_X_NEUTRAL" value="360"/>
+    <define name="MAG_Y_NEUTRAL" value="-602"/>
+    <define name="MAG_Z_NEUTRAL" value="-313"/>
+    <define name="MAG_X_SENS" value="3.87956285611" integer="16"/>
+    <define name="MAG_Y_SENS" value="4.00524696232" integer="16"/>
+    <define name="MAG_Z_SENS" value="4.09474740848" integer="16"/>
+
+    <!-- MAGNETO CURRENT CALIBRATION -->
+<!--    <define name="MAG_X_CURRENT_COEF" value="0.0103422023767"/>
+    <define name="MAG_Y_CURRENT_COEF" value="0.0084568317783"/>
+    <define name="MAG_Z_CURRENT_COEF" value="-0.01935617335"/>-->
+  </section>
+
+
+  <section name="AUTOPILOT">
+    <define name="MODE_STARTUP" value="AP_MODE_ATTITUDE_DIRECT"/>
+    <define name="MODE_MANUAL" value="AP_MODE_RC_DIRECT"/>
+    <define name="MODE_AUTO1" value="AP_MODE_RATE_DIRECT"/>
+    <define name="MODE_AUTO2" value="AP_MODE_NAV"/>
+
+    <define name="NO_RC_THRUST_LIMIT" value="TRUE"/>
+  </section>
+
+  <section name="BAT">
+    <define name="MILLIAMP_AT_FULL_THROTTLE" value="14000"/>
+    <define name="CATASTROPHIC_BAT_LEVEL" value="3.0" unit="V"/>
+    <define name="CRITIC_BAT_LEVEL" value="3.3" unit="V"/>
+    <define name="LOW_BAT_LEVEL" value="3.5" unit="V"/>
+    <define name="MAX_BAT_LEVEL" value="4.8" unit="V"/>
+  </section>
+
+
+  <section name="STABILIZATION_RATE" prefix="STABILIZATION_RATE_">
+    <define name="SP_MAX_P" value="15000"/>
+    <define name="SP_MAX_Q" value="15000"/>
+    <define name="SP_MAX_R" value="15000"/>
+
+    <define name="GAIN_P" value="400"/>
+    <define name="GAIN_Q" value="400"/>
+    <define name="GAIN_R" value="418"/>
+
+    <define name="IGAIN_P" value="301"/>
+    <define name="IGAIN_Q" value="302"/>
+    <define name="IGAIN_R" value="303"/>
+  </section>
+
+  <section name="STABILIZATION_ATTITUDE" prefix="STABILIZATION_ATTITUDE_">
+
+    <!-- setpoints -->
+    <define name="SP_MAX_PHI" value="45." unit="deg"/>
+    <define name="SP_MAX_THETA" value="45." unit="deg"/>
+    <define name="SP_MAX_R" value="90." unit="deg/s"/>
+    <define name="DEADBAND_R" value="250"/>
+    <define name="DEADBAND_A" value="250"/>
+
+    <!-- reference -->
+    <define name="REF_OMEGA_P" value="750" unit="deg/s"/>
+    <define name="REF_ZETA_P" value="0.85"/>
+    <define name="REF_MAX_P" value="300." unit="deg/s"/>
+    <define name="REF_MAX_PDOT" value="RadOfDeg(8000.)"/>
+
+    <define name="REF_OMEGA_Q" value="750" unit="deg/s"/>
+    <define name="REF_ZETA_Q" value="0.85"/>
+    <define name="REF_MAX_Q" value="300." unit="deg/s"/>
+    <define name="REF_MAX_QDOT" value="RadOfDeg(8000.)"/>
+
+    <define name="REF_OMEGA_R" value="750" unit="deg/s"/>
+    <define name="REF_ZETA_R" value="0.85"/>
+    <define name="REF_MAX_R" value="300." unit="deg/s"/>
+    <define name="REF_MAX_RDOT" value="RadOfDeg(8000.)"/>
+
+    <!-- feedback -->
+    <define name="PHI_PGAIN" value="400"/>
+    <define name="PHI_DGAIN" value="200"/>  <!-- 200 -->
+    <define name="PHI_IGAIN" value="100"/>
+
+    <define name="THETA_PGAIN" value="400"/>
+    <define name="THETA_DGAIN" value="200"/>  <!-- 200 -->
+    <define name="THETA_IGAIN" value="100"/>
+
+    <define name="PSI_PGAIN" value="500"/> 
+    <define name="PSI_DGAIN" value="300"/>  <!-- 300 -->
+    <define name="PSI_IGAIN" value="10"/> <!-- 10 -->
+
+    <!-- feedforward -->
+    <define name="PHI_DDGAIN" value="0"/>
+    <define name="THETA_DDGAIN" value="0"/>
+    <define name="PSI_DDGAIN" value=" 0"/>
+
+    <define name="PHI_AGAIN" value="0"/>
+    <define name="THETA_AGAIN" value="0"/>
+    <define name="PSI_AGAIN" value="0"/>
+  </section>
+
+  <section name="INS" prefix="INS_">
+  </section>
+
+ <section name="GUIDANCE_V" prefix="GUIDANCE_V_">
+   <define name="MIN_ERR_Z" value="POS_BFP_OF_REAL(-10.)"/>
+   <define name="MAX_ERR_Z" value="POS_BFP_OF_REAL( 10.)"/>
+   <define name="MIN_ERR_ZD" value="SPEED_BFP_OF_REAL(-10.)"/>
+   <define name="MAX_ERR_ZD" value="SPEED_BFP_OF_REAL( 10.)"/>
+   <define name="MAX_SUM_ERR" value="2000000"/>
+   <define name="HOVER_KP" value="276"/>
+   <define name="HOVER_KD" value="455"/>
+   <define name="HOVER_KI" value="100"/>
+<!--    <define name="GUIDANCE_V_NOMINAL_HOVER_THROTTLE" value="0.9"/> -->
+  </section>
+
+  <section name="AHRS" prefix="AHRS_">
+    <!--     Delft magnetic field -->
+    <define name="H_X" value="0.39049610"/>
+    <define name="H_Y" value="0.00278894"/>
+    <define name="H_Z" value="0.92060036"/>
+  </section>
+
+ <section name="GUIDANCE_H" prefix="GUIDANCE_H_">
+   <define name="PGAIN" value="39"/>
+   <define name="DGAIN" value="50"/>
+   <define name="IGAIN" value="19"/>
+ </section>
+
+ <section name="SIMULATOR" prefix="NPS_">
+   <define name="ACTUATOR_NAMES" value="{&quot;front_motor&quot;, &quot;back_motor&quot;, &quot;right_motor&quot;, &quot;left_motor&quot;}"/>
+   <define name="JSBSIM_INIT" value="&quot;reset00&quot;"/>
+   <define name="JSBSIM_MODEL" value="&quot;simple_quad&quot;"/>
+   <define name="SENSORS_PARAMS" value="&quot;nps_sensors_params_default.h&quot;"/>
+ </section>
+
+
+
+</airframe>
