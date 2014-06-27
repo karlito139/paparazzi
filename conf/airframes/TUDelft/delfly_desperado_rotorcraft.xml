@@ -16,7 +16,7 @@
       <subsystem name="radio_control" type="superbitrf_rc">
         <!-- TUDelft Dx6i: TX 4 1974942194, TX 5 692352099, the superbitrf dongle : 2008496626 -->
         <!-- graupner (orange RX) : 3327503026, graupner (spektrum 9) : 4095452533 -->
-        <define name="RADIO_TRANSMITTER_ID" value="692352099"/>
+        <define name="RADIO_TRANSMITTER_ID" value="1974942194"/>
         <define name="RADIO_TRANSMITTER_CHAN" value="9"/>
         <define name="RADIO_TRANSMITTER_PROTOCOL" value="DSM_DSM2_2"/>
         <define name="RADIO_MODE" value="RADIO_GEAR"/>
@@ -49,7 +49,7 @@
     <subsystem name="gps" type="ublox"/>
     <subsystem name="stabilization" type="int_quat"/>
     <subsystem name="ahrs" type="int_cmpl_quat">
-      <configure name="USE_MAGNETOMETER" value="FALSE"/>
+      <configure name="USE_MAGNETOMETER" value="TRUE"/>
 
 
       <!--<define name="AHRS_USE_GPS_HEADING" value="0"/>-->
@@ -149,12 +149,14 @@
     <define name="ACCEL_Z_NEUTRAL" value="0"/>
 
     <!-- MAGNETO CALIBRATION DELFT -->
-    <define name="MAG_X_NEUTRAL" value="360"/>
-    <define name="MAG_Y_NEUTRAL" value="-602"/>
-    <define name="MAG_Z_NEUTRAL" value="-313"/>
-    <define name="MAG_X_SENS" value="3.87956285611" integer="16"/>
-    <define name="MAG_Y_SENS" value="4.00524696232" integer="16"/>
-    <define name="MAG_Z_SENS" value="4.09474740848" integer="16"/>
+<define name="MAG_X_NEUTRAL" value="-269"/>
+<define name="MAG_Y_NEUTRAL" value="52"/>
+<define name="MAG_Z_NEUTRAL" value="294"/>
+<define name="MAG_X_SENS" value="3.94342959085" integer="16"/>
+<define name="MAG_Y_SENS" value="2.55105894066" integer="16"/>
+<define name="MAG_Z_SENS" value="3.91555081627" integer="16"/>
+
+
 
     <!-- MAGNETO CURRENT CALIBRATION -->
 <!--    <define name="MAG_X_CURRENT_COEF" value="0.0103422023767"/>
@@ -166,7 +168,7 @@
   <section name="AUTOPILOT">
     <define name="MODE_STARTUP" value="AP_MODE_ATTITUDE_DIRECT"/>
     <define name="MODE_MANUAL" value="AP_MODE_RC_DIRECT"/>
-    <define name="MODE_AUTO1" value="AP_MODE_RATE_DIRECT"/>
+    <define name="MODE_AUTO1" value="AP_MODE_ATTITUDE_DIRECT"/>
     <define name="MODE_AUTO2" value="AP_MODE_NAV"/>
 
     <define name="NO_RC_THRUST_LIMIT" value="TRUE"/>
