@@ -285,18 +285,20 @@ x AP_MODE_HOVER_DIRECT (HOVER)
 <!--    <define name="GUIDANCE_V_NOMINAL_HOVER_THROTTLE" value="0.9"/> -->
   </section>
 
+  <section name="GUIDANCE_H" prefix="GUIDANCE_H_">
+   <define name="PGAIN" value="39"/>
+   <define name="DGAIN" value="50"/>
+   <define name="IGAIN" value="19"/>
+
+    <define name="MAX_BANK" value="45" unit="deg"/>
+  </section>
+
   <section name="AHRS" prefix="AHRS_">
     <!--     Delft magnetic field -->
     <define name="H_X" value="0.39049610"/>
     <define name="H_Y" value="0.00278894"/>
     <define name="H_Z" value="0.92060036"/>
   </section>
-
- <section name="GUIDANCE_H" prefix="GUIDANCE_H_">
-   <define name="PGAIN" value="39"/>
-   <define name="DGAIN" value="50"/>
-   <define name="IGAIN" value="19"/>
- </section>
 
  <section name="SIMULATOR" prefix="NPS_">
    <define name="ACTUATOR_NAMES" value="{&quot;front_motor&quot;, &quot;back_motor&quot;, &quot;right_motor&quot;, &quot;left_motor&quot;}"/>
