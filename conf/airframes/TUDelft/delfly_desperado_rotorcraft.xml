@@ -89,30 +89,6 @@
     <axis name="THRUST" failsafe_value="0"/>
   </commands>
 
-  <section name="MIXER">
-    <define name="AILEVON_AILERON_RATE" value="0.75"/>
-    <define name="AILEVON_ELEVATOR_RATE" value="0.75"/>
-  </section>
-
-  <command_laws>
-    <let var="aileron" value="@ROLL * AILEVON_AILERON_RATE - @YAW * AILEVON_AILERON_RATE / 2 "/>
-    <let var="elevator" value="@PITCH * AILEVON_ELEVATOR_RATE"/>
-
-    <set servo="RIGHT_ELERON" value="$elevator"/>
-    <set servo="LEFT_ELERON" value="$aileron"/>
-
-
-    <set servo="MOTOR" value="@THRUST"/>
-
-
-    <!--<call fun="motor_mixing_run(autopilot_motors_on,FALSE,values)"/>
-    <set servo="MOTOR" value="motor_mixing.commands[0]"/>
-    <set servo="LEFT_ELERON" value="motor_mixing.commands[1]"/> 
-    <set servo="RIGHT_ELERON" value="motor_mixing.commands[2]"/> -->
-
-
-  </command_laws>
-
   <section name="MIXING" prefix="MOTOR_MIXING_">
 
     <define name="NB_MOTOR" value="0"/>
@@ -137,6 +113,30 @@
 
   </section>
 
+  <section name="MIXER">
+    <define name="AILEVON_AILERON_RATE" value="0.75"/>
+    <define name="AILEVON_ELEVATOR_RATE" value="0.75"/>
+  </section>
+
+  <command_laws>
+    <let var="aileron" value="@ROLL * AILEVON_AILERON_RATE - @YAW * AILEVON_AILERON_RATE / 2 "/>
+    <let var="elevator" value="@PITCH * AILEVON_ELEVATOR_RATE"/>
+
+    <set servo="RIGHT_ELERON" value="$elevator"/>
+    <set servo="LEFT_ELERON" value="$aileron"/>
+
+    <set servo="MOTOR" value="@THRUST"/>
+
+
+    <!--<call fun="motor_mixing_run(autopilot_motors_on,FALSE,values)"/>
+    <set servo="MOTOR" value="motor_mixing.commands[0]"/>
+    <set servo="LEFT_ELERON" value="motor_mixing.commands[1]"/> 
+    <set servo="RIGHT_ELERON" value="motor_mixing.commands[2]"/> -->
+
+
+  </command_laws>
+
+
 
 
   <section name="IMU" prefix="IMU_">
@@ -149,21 +149,12 @@
     <define name="ACCEL_Z_NEUTRAL" value="0"/>
 
     <!-- MAGNETO CALIBRATION DELFT -->
-<!--<define name="MAG_X_NEUTRAL" value="-269"/>
-<define name="MAG_Y_NEUTRAL" value="52"/>
-<define name="MAG_Z_NEUTRAL" value="294"/>
-<define name="MAG_X_SENS" value="3.94342959085" integer="16"/>
-<define name="MAG_Y_SENS" value="2.55105894066" integer="16"/>
-<define name="MAG_Z_SENS" value="3.91555081627" integer="16"/>-->
-
 <define name="MAG_X_NEUTRAL" value="-362"/>
 <define name="MAG_Y_NEUTRAL" value="150"/>
 <define name="MAG_Z_NEUTRAL" value="356"/>
 <define name="MAG_X_SENS" value="3.65705733914" integer="16"/>
 <define name="MAG_Y_SENS" value="3.84740568459" integer="16"/>
 <define name="MAG_Z_SENS" value="3.98971926329" integer="16"/>
-
-
 
     <!-- MAGNETO CURRENT CALIBRATION -->
 <!--    <define name="MAG_X_CURRENT_COEF" value="0.0103422023767"/>
@@ -174,33 +165,15 @@
 
   <section name="AUTOPILOT">
     <define name="MODE_STARTUP" value="AP_MODE_ATTITUDE_DIRECT"/>
-    <define name="MODE_MANUAL" value="AP_MODE_RATE_RC_CLIMB"/>  <!-- AP_MODE_RC_DIRECT -->
-    <define name="MODE_AUTO1" value="AP_MODE_ATTITUDE_RC_CLIMB"/>
+    <define name="MODE_MANUAL" value="AP_MODE_RC_DIRECT"/>  <!-- AP_MODE_RC_DIRECT -->
+    <define name="MODE_AUTO1" value="AP_MODE_NAV"/>
     <define name="MODE_AUTO2" value="AP_MODE_NAV"/>
 
     <define name="NO_RC_THRUST_LIMIT" value="TRUE"/>
   </section>
 
-<!--
-x AP_MODE_FAILSAFE (SAFE) 
-x AP_MODE_KILL (KILL) 
-x AP_MODE_RATE_DIRECT (RATE) 
-x AP_MODE_ATTITUDE_DIRECT (ATT) 
-x AP_MODE_RATE_RC_CLIMB (R_RCC) 
-  AP_MODE_ATTITUDE_RC_CLIMB (A_RCC) 
-  AP_MODE_ATTITUDE_CLIMB (ATT_C) 
-  AP_MODE_RATE_Z_HOLD (R_ZH) 
-  AP_MODE_ATTITUDE_Z_HOLD (A_ZH) 
-x AP_MODE_HOVER_DIRECT (HOVER) 
-  AP_MODE_HOVER_CLIMB (HOV_C) 
-  AP_MODE_HOVER_Z_HOLD (H_ZH)
-  AP_MODE_NAV (NAV) 
-  AP_MODE_RC_DIRECT (RC_D) 
-  AP_MODE_CARE_FREE_DIRECT (CF)
--->
-
   <section name="BAT">
-    <define name="MILLIAMP_AT_FULL_THROTTLE" value="14000"/>
+    <define name="MILLIAMP_AT_FULL_THROTTLE" value="1400"/>
     <define name="CATASTROPHIC_BAT_LEVEL" value="3.0" unit="V"/>
     <define name="CRITIC_BAT_LEVEL" value="3.3" unit="V"/>
     <define name="LOW_BAT_LEVEL" value="3.5" unit="V"/>
