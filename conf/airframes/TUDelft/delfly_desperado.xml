@@ -18,7 +18,11 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
         <define name="RADIO_MODE" value="RADIO_GEAR"/>
       </subsystem>
 
+      <!-- the  periodic frequency is 60 by default in fixed wing, 512 in rotorcraft -->
+      <!-- AHRS_PROPAGATE_FREQUENCY mus be < PERIODIC_FREQUENCY -->
       <configure name="AHRS_PROPAGATE_FREQUENCY" value="500"/>
+      <configure name="PERIODIC_FREQUENCY" value="512"/>
+
       <define name="AUTOPILOT_DISABLE_AHRS_KILL"/>  <!-- NEW -->
     </target>
 
@@ -221,7 +225,7 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <define name="AUTO_THROTTLE_IGAIN" value="0.1"/>
     <define name="AUTO_THROTTLE_PITCH_OF_VZ_PGAIN" value="0.05"/>
 
-    <define name="THROTTLE_SLEW_LIMITER" value="0" unit="s"/>
+    <define name="THROTTLE_SLEW_LIMITER" value="1" unit="s"/>
   </section>
 
   <section name="HORIZONTAL CONTROL" prefix="H_CTL_">
