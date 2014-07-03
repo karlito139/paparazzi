@@ -169,7 +169,7 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
 <define name="MAG_Y_SENS" value="4.00524696232" integer="16"/> <!-- 3.71461295002 -->
 <define name="MAG_Z_SENS" value="4.09474740848" integer="16"/> <!-- 3.4639003008 -->
 
-    <define name="BODY_TO_IMU_PHI" value="-98." unit="deg"/> <!-- Roll -104 -->
+    <define name="BODY_TO_IMU_PHI" value="-104." unit="deg"/> <!-- Roll -104 -->
     <define name="BODY_TO_IMU_THETA" value="-165." unit="deg"/> <!-- pitch : true value : 180; add 15° of pitching up : -165 -->
     <define name="BODY_TO_IMU_PSI" value="0." unit="deg"/> <!-- Yaw -->
   </section>
@@ -241,6 +241,9 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <define name="AUTO_THROTTLE_PITCH_OF_VZ_PGAIN" value="0.05"/>
 
     <define name="THROTTLE_SLEW_LIMITER" value="1" unit="s"/>
+
+    <define name="PITCH_LOITER_TRIM" value="RadOfDeg(45.)"/>
+    <define name="PITCH_DASH_TRIM" value="RadOfDeg(-0.)"/>
   </section>
 
   <section name="HORIZONTAL CONTROL" prefix="H_CTL_">
@@ -251,15 +254,15 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <define name="PITCH_MAX_SETPOINT" value="40" unit="deg"/>
     <define name="PITCH_MIN_SETPOINT" value="-20" unit="deg"/>
 
-    <define name="PITCH_PGAIN" value="12000."/>
+    <define name="PITCH_PGAIN" value="12000."/>	<!--  -->
     <define name="PITCH_DGAIN" value="1.5"/>
 
     <define name="ELEVATOR_OF_ROLL" value="800"/>
 
     <define name="ROLL_SLEW" value="0"/>
 
-    <define name="ROLL_ATTITUDE_GAIN" value="7500"/>
-    <define name="ROLL_RATE_GAIN" value="1500"/>
+    <define name="ROLL_ATTITUDE_GAIN" value="7500"/> <!--  -->
+    <define name="ROLL_RATE_GAIN" value="500"/>	<!-- 1500 -->
   </section>
 
   <section name="AGGRESSIVE" prefix="AGR_">
