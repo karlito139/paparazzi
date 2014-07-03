@@ -1,0 +1,42 @@
+<!DOCTYPE flight_plan SYSTEM "flight_plan.dtd">
+
+<flight_plan alt="260" ground_alt="185" lat0="43.46223" lon0="1.27289" max_dist_from_home="1500" name="Basic" security_height="25">
+  <header>
+#include "subsystems/datalink/datalink.h"
+      #include "subsystems/electrical.h"
+      #include "subsystems/datalink/datalink.h"
+      #include "firmwares/fixedwing/guidance/energy_ctrl.h"
+      static inline uint16_t obcrulesdatalinklosscounter = 0;
+</header>
+  <waypoints>
+    <waypoint alt="0.0" name="HOME" x="0.0" y="-0.0"/>
+    <waypoint alt="10.0" name="A" x="-31.7" y="34.3"/>
+    <waypoint alt="10.0" name="B" x="44.2" y="33.0"/>
+  </waypoints>
+  <exceptions>
+    <exception cond="(datalink_time > 5) && !(nav_block == IndexOfBlock('WaitForGPSFix'))" deroute="Crash"/>
+  </exceptions>
+  <blocks>
+    <block name="WaitForGPSFix">
+      <set value="1" var="kill_throttle"/>
+      <while cond="!GpsFixValid()"/>
+    </block>
+    <block name="Geo init">
+      <while cond="LessThan(NavBlockTime(), 10)"/>
+      <call fun="NavSetGroundReferenceHere()"/>
+    </block>
+    <block name="goToA">
+      <go wp="A"/>
+    </block>
+    <block name="goToB">
+      <go wp="B"/>
+    </block>
+    <block name="getBackHome">
+      <go wp="HOME"/>
+    </block>
+    <block name="stop">
+      <go approaching_time="0" from="AF" hmode="route" throttle="0.0" vmode="throttle" wp="TD"/>
+      <attitude roll="0.0" throttle="0.0" until="FALSE" vmode="throttle"/>
+    </block>
+  </blocks>
+</flight_plan>
