@@ -225,9 +225,9 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
   <section name="VERTICAL CONTROL" prefix="V_CTL_">
     <define name="POWER_CTL_BAT_NOMINAL" value="3.7" unit="volt"/>
     <!-- outer loop proportional gain -->
-    <define name="ALTITUDE_PGAIN" value="0.03"/>
+    <define name="ALTITUDE_PGAIN" value="0.05"/>
     <!-- outer loop saturation -->
-    <define name="ALTITUDE_MAX_CLIMB" value="2."/>
+    <define name="ALTITUDE_MAX_CLIMB" value="1."/>
 
     <!-- auto throttle inner loop -->
     <define name="AUTO_THROTTLE_NOMINAL_CRUISE_THROTTLE" value="0.8"/>
@@ -235,12 +235,12 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <define name="AUTO_THROTTLE_MAX_CRUISE_THROTTLE" value="0.99"/>
     <define name="AUTO_THROTTLE_LOITER_TRIM" value="1500"/>
     <define name="AUTO_THROTTLE_DASH_TRIM" value="-4000"/>
-    <define name="AUTO_THROTTLE_CLIMB_THROTTLE_INCREMENT" value="0.10" unit="%/(m/s)"/>
-    <define name="AUTO_THROTTLE_PGAIN" value="0.02"/>
+    <define name="AUTO_THROTTLE_CLIMB_THROTTLE_INCREMENT" value="0.20" unit="%/(m/s)"/>
+    <define name="AUTO_THROTTLE_PGAIN" value="0.1"/>
     <define name="AUTO_THROTTLE_IGAIN" value="0.1"/>
-    <define name="AUTO_THROTTLE_PITCH_OF_VZ_PGAIN" value="0.05"/>
+    <define name="AUTO_THROTTLE_PITCH_OF_VZ_PGAIN" value="0.1"/>
 
-    <define name="THROTTLE_SLEW_LIMITER" value="1" unit="s"/>
+    <define name="THROTTLE_SLEW_LIMITER" value="0.03" unit="s"/>
 
     <define name="PITCH_LOITER_TRIM" value="RadOfDeg(45.)"/>
     <define name="PITCH_DASH_TRIM" value="RadOfDeg(-0.)"/>
@@ -257,12 +257,12 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <define name="PITCH_PGAIN" value="12000."/>	<!--  -->
     <define name="PITCH_DGAIN" value="1.5"/>
 
-    <define name="ELEVATOR_OF_ROLL" value="800"/>
+    <define name="ELEVATOR_OF_ROLL" value="1500"/>
 
     <define name="ROLL_SLEW" value="0"/>
 
     <define name="ROLL_ATTITUDE_GAIN" value="7500"/> <!--  -->
-    <define name="ROLL_RATE_GAIN" value="500"/>	<!-- 1500 -->
+    <define name="ROLL_RATE_GAIN" value="1000"/>	<!-- 1500 -->
   </section>
 
   <section name="AGGRESSIVE" prefix="AGR_">
@@ -278,14 +278,14 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
 
   <section name="FAILSAFE" prefix="FAILSAFE_">
     <define name="DELAY_WITHOUT_GPS" value="5" unit="s"/>
-    <define name="DEFAULT_THROTTLE" value="0" unit="%"/>
-    <define name="DEFAULT_ROLL" value="100" unit="%"/>
-    <define name="DEFAULT_PITCH" value="100" unit="%"/>
+    <define name="DEFAULT_THROTTLE" value="0"/>
+    <define name="DEFAULT_ROLL" value="5000"/>
+    <define name="DEFAULT_PITCH" value="3000"/>
   </section>
 
   <section name="AUTO1" prefix="AUTO1_">
     <define name="MAX_ROLL" value="90." unit="deg"/>
-    <define name="MAX_PITCH" value="90." unit="deg"/>
+    <define name="MAX_PITCH" value="40." unit="deg"/>
   </section>
 
   <section name="BAT">
