@@ -17,7 +17,7 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
         <define name="RADIO_TRANSMITTER_PROTOCOL" value="DSM_DSM2_2"/>
         <!--<define name="RADIO_TRANSMITTER_PROTOCOL" value="0x01"/>--> <!-- DSM_DSM2_1 -->
         <define name="RADIO_TRANSMITTER_CHAN" value="9"/>
-        <define name="RADIO_MODE" value="RADIO_GEAR"/>
+        <define name="RADIO_MODE" value="RADIO_GEAR"/>  <!-- RADIO_FLAP -->
       </subsystem>
 
       <!-- the  periodic frequency is 60 by default in fixed wing, 512 in rotorcraft -->
@@ -28,7 +28,6 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
       <define name="AUTOPILOT_DISABLE_AHRS_KILL"/>  <!-- NEW -->
     </target>
     <target name="sim" 			board="pc" />
-    <target name="jsbsim"       board="pc"/>
 
     <define name="AGR_CLIMB"/>
     <define name="LOITER_TRIM"/>
