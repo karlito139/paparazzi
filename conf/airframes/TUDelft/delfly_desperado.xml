@@ -27,6 +27,8 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
 
       <define name="AUTOPILOT_DISABLE_AHRS_KILL"/>  <!-- NEW -->
     </target>
+    <target name="sim" 			board="pc" />
+    <target name="jsbsim"       board="pc"/>
 
     <define name="AGR_CLIMB"/>
     <define name="LOITER_TRIM"/>
@@ -46,7 +48,7 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
 
 
     <!-- Sensors -->
-    <subsystem name="imu" type="lisa_s_v1.0"/>
+    <subsystem name="imu" type="lisa_s_v1.0"/>   <!-- lisa_s_v1.0 -->
     <subsystem name="gps" type="ublox">
       <configure name="GPS_PORT" value="UART3"/>
       <configure name="GPS_BAUD" value="B38400"/>
@@ -140,6 +142,13 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <set servo="RIGHT_ELERON" value="$elevator"/>
     <set servo="LEFT_ELERON" value="$aileron"/>
   </command_laws>
+
+
+  <section name="SIMU">
+    <define name="JSBSIM_MODEL" value="&quot;Malolo1&quot;"/>
+    <define name="JSBSIM_IR_ROLL_NEUTRAL" value="0." unit="deg"/>
+    <define name="JSBSIM_IR_PITCH_NEUTRAL" value="0." unit="deg"/>
+  </section>
 
 
 
