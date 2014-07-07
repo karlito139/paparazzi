@@ -1,0 +1,44 @@
+<!DOCTYPE flight_plan SYSTEM "flight_plan.dtd">
+
+<flight_plan alt="260" ground_alt="185" lat0="43.46223" lon0="1.27289" max_dist_from_home="1500" name="Basic" security_height="25">
+  <header>
+#include "subsystems/datalink/datalink.h"
+      #include "subsystems/electrical.h"
+      #include "subsystems/datalink/datalink.h"
+      #include "firmwares/fixedwing/guidance/energy_ctrl.h"
+      static inline uint16_t obcrulesdatalinklosscounter = 0;
+</header>
+  <waypoints>
+    <waypoint name="HOME" x="0" y="0"/>
+    <waypoint name="B" x="75.2" y="65.0"/>
+    <waypoint alt="215.0" name="A" x="-53.0" y="76.2"/>
+    <waypoint name="CLIMB" x="-114.5" y="162.3"/>
+  </waypoints>
+  <exceptions/>
+  <blocks>
+    <block name="Wait GPS">
+      <set value="1" var="kill_throttle"/>
+      <while cond="!GpsFixValid()"/>
+    </block>
+    <block name="Geo init">
+      <while cond="LessThan(NavBlockTime(), 10)"/>
+      <call fun="NavSetGroundReferenceHere()"/>
+    </block>
+    <block name="Holding point">
+      <set value="1" var="kill_throttle"/>
+      <attitude roll="0" throttle="0" vmode="throttle"/>
+    </block>
+    <block key="t" name="Takeoff" strip_button="Takeoff (wp CLIMB)" strip_icon="takeoff.png" group="home">
+      <exception cond="GetPosAlt() > GetAltRef()+25" deroute="GO_A"/>
+      <set value="0" var="kill_throttle"/>
+      <set value="0" var="autopilot_flight_time"/>
+      <go from="HOME" throttle="1.0" vmode="throttle" wp="CLIMB" pitch="15"/>
+    </block>
+    <block name="GO_A">
+      <go wp="A"/>
+    </block>
+    <block name="GO_B">
+      <go wp="B"/>
+    </block>
+  </blocks>
+</flight_plan>

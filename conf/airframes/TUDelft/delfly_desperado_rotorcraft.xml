@@ -16,7 +16,7 @@
       <subsystem name="radio_control" type="superbitrf_rc">
         <!-- TUDelft Dx6i: TX 4 1974942194, TX 5 692352099, the superbitrf dongle : 2008496626 -->
         <!-- graupner (orange RX) : 3327503026, graupner (spektrum 9) : 4095452533 -->
-        <define name="RADIO_TRANSMITTER_ID" value="1974942194"/>
+        <define name="RADIO_TRANSMITTER_ID" value="0xCB5BE055"/>
         <define name="RADIO_TRANSMITTER_CHAN" value="9"/>
         <define name="RADIO_TRANSMITTER_PROTOCOL" value="DSM_DSM2_2"/>
         <define name="RADIO_MODE" value="RADIO_GEAR"/>
