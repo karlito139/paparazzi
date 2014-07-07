@@ -22,8 +22,8 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
 
       <!-- the  periodic frequency is 60 by default in fixed wing, 512 in rotorcraft -->
       <!-- AHRS_PROPAGATE_FREQUENCY mus be < PERIODIC_FREQUENCY -->
-      <configure name="AHRS_PROPAGATE_FREQUENCY" value="500"/>
-      <configure name="PERIODIC_FREQUENCY" value="512"/>
+      <configure name="AHRS_PROPAGATE_FREQUENCY" value="50"/>
+      <!--<configure name="PERIODIC_FREQUENCY" value="512"/>-->
 
       <define name="AUTOPILOT_DISABLE_AHRS_KILL"/>  <!-- NEW -->
     </target>
