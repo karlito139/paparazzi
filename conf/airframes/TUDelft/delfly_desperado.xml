@@ -27,7 +27,7 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
 
       <define name="AUTOPILOT_DISABLE_AHRS_KILL"/>  <!-- NEW -->
     </target>
-    <target name="sim" 			board="pc" />
+    <!--<target name="sim" 			board="pc" />-->
 
     <define name="AGR_CLIMB"/>
     <define name="LOITER_TRIM"/>
