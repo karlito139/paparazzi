@@ -1,134 +1,112 @@
 <!DOCTYPE flight_plan SYSTEM "flight_plan.dtd">
+<!--
+The goal of this flightplan is to have a safe, simple no-brainer flightplan for your first AR drone tryout flights.
+It should be useable for UAS enthousiasts just starting in the field of autonomous AR Drone flights.
+This flightplan should be kept as simple as possible and *not* to be extended with more functionality, if one needs that, plz use another flightplan.
+-->
 
-<flight_plan alt="260" ground_alt="185" lat0="43.46223" lon0="1.27289" max_dist_from_home="1500" name="Basic" security_height="25">
+<!-- defult alt so high it will fly over most of tree in this world by default. Security height 15m a tradeof between telemetry loss, arframe damage and avarage small building height-->
+<flight_plan alt="70" ground_alt="0" lat0="51.991231" lon0="4.378035" max_dist_from_home="60" name="ARDrone Basic" security_height="15">
   <header>
+#include "autopilot.h"
+#include "subsystems/ahrs.h"
+#include "subsystems/electrical.h"
 #include "subsystems/datalink/datalink.h"
-
-      #include "subsystems/electrical.h"
-      #include "subsystems/datalink/datalink.h"
-      #include "firmwares/fixedwing/guidance/energy_ctrl.h"
-      static inline uint16_t obcrulesdatalinklosscounter = 0;
-    </header>
-
+  </header>
   <waypoints>
-    <waypoint name="HOME" x="0" y="0"/>
-    <waypoint name="STDBY" x="49.5" y="100.1"/>
-    <waypoint name="1" x="10.1" y="189.9"/>
-    <waypoint name="2" x="132.3" y="139.1"/>
-    <waypoint name="MOB" x="137.0" y="-11.6"/>
-    <waypoint name="S1" x="-119.2" y="69.6"/>
-    <waypoint name="S2" x="274.4" y="209.5"/>
-    <waypoint alt="215.0" name="AF" x="177.4" y="45.1"/>
-    <waypoint alt="185.0" name="TD" x="28.8" y="57.0"/>
-    <waypoint name="_BASELEG" x="168.8" y="-13.8"/>
-    <waypoint name="CLIMB" x="-114.5" y="162.3"/>
+    <waypoint name="HOME" x="0.0" y="0.0"/>
+    <waypoint name="_CLIMB" x="0.0" y="5.0"/>
+    <waypoint name="Landingspot" x="5.0" y="5.0"/>
+    <waypoint name="_TDEMERGENCY" x="-5.0" y="-5.0"/>
+    <waypoint name="A" x="5" y="-10"/>
+    <waypoint name="B" x="20" y="-30"/>
   </waypoints>
-
-
-
   <exceptions>
-    <!-- TODO: some exeption should be localblock exceptions>-->
-    <!-- if datalinkloss > 10 sec automove to commshold-->
-    <!--<exception cond="(datalink_time > 3) && !(nav_block == IndexOfBlock('WaitForGPSFix')) &&
-      !(nav_block == IndexOfBlock('Initialize')) && !(nav_block == IndexOfBlock('Set_base_location')) &&
-      !(nav_block == IndexOfBlock('Takeoff')) && !(nav_block == IndexOfBlock('AutoTakeoff')) &&
-      !(nav_block == IndexOfBlock('Land')) && !(nav_block == IndexOfBlock('Final')) &&
-      !(nav_block == IndexOfBlock('Flare'))" deroute="Crash"/>-->
-
-    <exception cond="(datalink_time > 5) && !(nav_block == IndexOfBlock('WaitForGPSFix'))" deroute="Crash"/>
-
-    <!-- This use avarage value ove a few secs this to avoid sag during ascend manouvers> set in airframe -->
-    <!--<exception cond="electrical.bat_low && !(nav_block == IndexOfBlock('WaitForGPSFix')) &&
-      !(nav_block == IndexOfBlock('Initialize')) && !(nav_block == IndexOfBlock('Set_base_location')) &&
-      !(nav_block == IndexOfBlock('Takeoff')) && !(nav_block == IndexOfBlock('AutoTakeoff')) &&
-      !(nav_block == IndexOfBlock('Land')) && !(nav_block == IndexOfBlock('Final')) &&
-      !(nav_block == IndexOfBlock('Flare'))" deroute="Standby"/>-->
-
-    <!-- test if to high -->
-    <!--  <exception cond="(GetPosAlt() > ground_alt+300) && !(nav_block == IndexOfBlock('WaitForGPSFix')) &&
-    !(nav_block == IndexOfBlock('Initialize')) && !(nav_block == IndexOfBlock('Set_base_location')) &&
-    !(nav_block == IndexOfBlock('Takeoff')) && !(nav_block == IndexOfBlock('AutoTakeoff'))" deroute="Standby"/>-->
-
-    <!--<exception cond="!(InsideMissionBoundary(GetPosX(), GetPosY())) && !(nav_block == IndexOfBlock('WaitForGPSFix'))
-      && !(nav_block == IndexOfBlock('Initialize')) && !(nav_block == IndexOfBlock('Set_base_location')) &&
-      !(nav_block == IndexOfBlock('Takeoff')) && !(nav_block == IndexOfBlock('AutoTakeoff')) &&
-      !(nav_block == IndexOfBlock('Land')) && !(nav_block == IndexOfBlock('Final')) &&
-      !(nav_block == IndexOfBlock('Flare'))" deroute="Standby"/>-->
-
-      <!--<TODO: Add somethin like pre_call="if (!InsideRed(GetPosX(), GetPosY())) NavKillThrottle();-->
+    <!-- Check if battery voltage is low, then try to go to block Land. This is deemed better than to land at that very spot since that can be above something unknown, 
+    is less safe and has less chance of AC recovery. It states battery LOW, not battery critical -->
+    <exception cond="electrical.bat_low && !(nav_block == IndexOfBlock('Setting home location')) && !(nav_block == IndexOfBlock('Holding point')) && !(nav_block == IndexOfBlock('Land')) && !(nav_block == IndexOfBlock('Emergency'))" deroute="Land"/>
+    <exception cond="electrical.bat_critical && !(nav_block == IndexOfBlock('Setting home location')) && !(nav_block == IndexOfBlock('Holding point')) && !(nav_block == IndexOfBlock('Land')) && !(nav_block == IndexOfBlock('Emergency'))" deroute="Emergency"/>
+    <!-- No connection for some time in flight, then try to land -->
+    <exception cond="datalink_time > 6 && !(nav_block == IndexOfBlock('Setting home location')) && !(nav_block == IndexOfBlock('Holding point')) && !(nav_block == IndexOfBlock('Land')) && !(nav_block == IndexOfBlock('Emergency'))" deroute="Land"/>
+    <!-- If somehow the AC isVALUEVALUE higher than initial ground position plus 60m, just land -->
+ <!--tofix only in flight   <exception cond="GetPosAlt() > (GetAltRef() + 60)" deroute="Land"/> -->
+    <!-- No link for 20 seconds and no GPS valid position fix, but the AC can still hover...however no option to give commands, emergency landing -->
+  <!--  <exception cond="And(datalink_time > 20, !GpsFixValid()) && !(nav_block == IndexOfBlock('Setting home location')) && !(nav_block == IndexOfBlock('Holding point')) && !(nav_block == IndexOfBlock('Emergency'))" deroute="Emergency"/>-->
+    <!-- Check if outside a safety circle from where the drone started the climb, if outside come back to where climb was started-->
+    <exception cond="(((((WaypointX(WP__CLIMB)) - GetPosX())*((WaypointX(WP__CLIMB)) - GetPosX()))) + ((((WaypointY(WP__CLIMB)) - GetPosY())*((WaypointY(WP__CLIMB)) - GetPosY())))) > (MAX_DIST_FROM_HOME*MAX_DIST_FROM_HOME) && !(nav_block == IndexOfBlock('Setting home location')) && !(nav_block == IndexOfBlock('Holding point')) && !(nav_block == IndexOfBlock('Land')) && !(nav_block == IndexOfBlock('Emergency'))" deroute="Land"/>
   </exceptions>
-
   <blocks>
-    <block name="WaitForGPSFix">
-      <set value="1" var="kill_throttle"/>
-      <while cond="!GpsFixValid()"/>
-    </block>
-    <block name="Geo init">
-      <while cond="LessThan(NavBlockTime(), 10)"/>
+    <block name="Setting home location"><!-- TODO make sure there is an indicator in simple layout of GCS screen displaying "Waiting for GPS fix..."-->
+      <call fun="NavKillThrottle()"/>
+<!-- if no valid fix or GPS accuracy > 15m or no AHRS , it a no-go, just wait-->
+      <while cond="!GpsFixValid() || gps.pacc > 1800 || !(ahrs.status == AHRS_RUNNING)"/>
+<!-- Additional wait to allow for better GPS data -->
+      <while cond="LessThan(NavBlockTime(), 8)"/>
       <call fun="NavSetGroundReferenceHere()"/>
+<!-- Set here, while setting theoretically GPS position can still jump, thus set in least needed precision order -->
+      <call fun="NavSetAltitudeReferenceHere()"/>
+      <call fun="NavSetWaypointHere(WP__TDEMERGENCY)"/>
+      <call fun="NavSetWaypointHere(WP_Landingspot)"/>
+<!-- ALTERNATIVE To make the naming better visible, move it aside a bit 
+      <set var="waypoints[WP_Landingspot].x" value="WaypointX(WP_Landingspot) + 1"/>
+      <set var="waypoints[WP_Landingspot].y" value="WaypointY(WP_Landingspot) + 5"/>
+-->
+      <call fun="NavSetWaypointHere(WP_HOME)"/>
+      <call fun="NavSetWaypointHere(WP__CLIMB)"/>
     </block>
+<!-- wait for take-off signal -->
     <block name="Holding point">
-      <!--set var="nav_mode" value="NAV_MODE_ROLL"/-->
-      <set value="1" var="kill_throttle"/>
-      <attitude roll="0" throttle="0" vmode="throttle"/>
+      <call fun="NavKillThrottle()"/>
+      <attitude pitch="0" roll="0" throttle="0" vmode="throttle" until="FALSE"/>
     </block>
-    <block key="t" name="Takeoff" strip_button="Takeoff (wp CLIMB)" strip_icon="takeoff.png" group="home">
-      <exception cond="GetPosAlt() > GetAltRef()+25" deroute="Standby"/>
+    <block key="t" name="Takeoff" strip_button="Takeoff" strip_icon="takeoff.png">
+<!-- To make sure that even if aircraft was moved by e.g. walking with it to a different spot, the takeoff and landing position are still on that spot, home is allowed to be somewhere else. -->
+      <call fun="NavSetAltitudeReferenceHere()"/>
+      <call fun="NavSetWaypointHere(WP__CLIMB)"/>
+      <call fun="NavSetWaypointHere(WP_Landingspot)"/>
+      <!--<set var="waypoints[WP_Landingspot].z" value="GetAltRef()"/>--><!-- Maybe to should be actual altitude?-->
+<!--Switching the mode to auto2/NAV from any other mode will reset nav_heading to the current heading.
+So you can moved the aircraft around just fine after powerup, as long as you don't move it anymore once you entered NAV mode.-->
+      <!--<set var="nav_heading" value="stateGetNedToBodyEulers_i()->psi"/>--> <!-- make sure the current heading is set just befor takeoff as far as possible, MAGNETO anyone?-->
       <set value="0" var="kill_throttle"/>
-      <set value="0" var="autopilot_flight_time"/>
-      <go from="HOME" throttle="1.0" vmode="throttle" wp="CLIMB" pitch="15"/>
+      <!-- TODO improve try takeof 5 time than give up an go to Holding point, something suck in the prop, a finger maybe ;)-->
+      <!--   <exception cond="!autopilot_motors_on" deroute="Takeoff"/>-->
+      <set value="0" var="autopilot_flight_time"/>    
+      <!-- If take-off to first point takes to long to reach somehow because of some reason, abort flight -->
+     <exception cond="block_time > 180" deroute="Land"/>
+     <!-- To make sure that takoff is straight up to the height of first waypoint A, so no sideways take-off, since sideways movements starting at low height from takeoff can have nasty effects) -->
+<!-- In real life aircraft can be blown sideways with strong wind TODO experiment with results of 2 stages 2 -->
+<!-- TODO see if adding this 2nd stage is better -->
+   <!--  <attitude pitch="0" roll="0" throttle="0.90" until="stage_time > 2" vmode="throttle"/>-->
+<!--Alternative <exception cond="WaypointAlt(WP_A) > stateGetPositionEnu_f()->z" deroute="A_to_B_and_back"/>-->
+     <stay vmode="climb" climb="0.7" until="WaypointAlt(WP_A) > stateGetPositionEnu_f()->z" wp="_CLIMB"/>
     </block>
-    <block key="Ctrl+a" name="Standby" strip_button="Standby" strip_icon="home.png" group="home">
-      <circle radius="nav_radius" wp="STDBY"/>
+<!-- The From A to B and back, The only one visible block so no GCS choices to toy around with, a non expert would get confused -->
+    <block key="m" name="From A to B and back">
+      <go wp="A"/>
+      <go from="A" hmode="route" wp="B"/>
+      <stay wp="B" until="stage_time > 3"/> <!-- Hang around for 3 seconds, any longer and people just starting get worried...-->
+      <go from="B" hmode="route" wp="A"/>
+      <!-- to make sure the route height to touchdown is high not lower than on the first takeoff-->
+   <!-- TODO: discuss this behaviour since it will look strange if drone first will climb to climb point and not decend when one presses land, perception difference-->
+      <deroute block="Land"/>
     </block>
-    <block key="F8" name="Figure 8 around wp 1" strip_button="Figure 8 (wp 1-2)" strip_icon="eight.png" group="base_pattern">
-      <eight center="1" radius="nav_radius" turn_around="2"/>
+<!-- A key combination to initiate a landing -->
+    <block name="Land" key="l">
+      <go wp="_CLIMB"/>
+      <go wp="Landingspot"/>
+      <!--<exception cond="!nav_is_in_flight()" deroute="Holding point"/>-->
+<!-- decend with 2ms while staying at same spot-->
+      <stay climb="-2.0" vmode="climb" wp="Landingspot"/>
     </block>
-    <block name="Oval 1-2" strip_button="Oval (wp 1-2)" strip_icon="oval.png" group="base_pattern">
-      <oval p1="1" p2="2" radius="nav_radius"/>
+<!-- To be able to react to the panic button. On throttle this works better if your battery is almost empty it will not try to throttle up creating a batt dip, and then a mainboard that would stop working -->
+    <block name="Emergency" key="e" strip_button="Emergency" strip_icon="home_emergency.png">
+   <!-- If landing would takes to long take drastic measures, kill everything -->
+     <!-- <exception cond="Block_time > 50" value="1" var="kill_throttle"/>-->
+      <call fun="NavSetWaypointHere(WP__TDEMERGENCY)"/>
+      <!--<exception cond="!nav_is_in_flight()" deroute="Holding point"/>-->
+  <!--TODO add Detect landing with sonar if Ardrone2 after sonar  baro code mixing sourcecode is in master-->
+      <stay wp="_TDEMERGENCY" throttle="0.30" vmode="throttle"/>
     </block>
-    <block name="MOB" strip_button="Circle around here" strip_icon="mob.png" group="base_pattern">
-      <call fun="NavSetWaypointHere(WP_MOB)"/>
-      <set value="DEFAULT_CIRCLE_RADIUS" var="nav_radius"/>
-      <circle radius="nav_radius" wp="MOB"/>
-    </block>
-    <block name="Survey S1-S2" strip_button="Survey (wp S1-S2)" strip_icon="survey.png" group="extra_pattern">
-      <survey_rectangle grid="150" wp1="S1" wp2="S2"/>
-    </block>
-    <block name="Path 1,2,S1,S2,STDBY" strip_button="Path (1,2,S1,S2,STDBY)" strip_icon="path.png" group="extra_pattern">
-      <path wpts="1,2 S1"/>
-      <path wpts="S1, S2 STDBY" approaching_time="1" pitch="auto" throttle="0.4"/>
-      <deroute block="Standby"/>
-    </block>
-    <block name="Land Right AF-TD" strip_button="Land right (wp AF-TD)" strip_icon="land-right.png" group="land">
-      <set value="DEFAULT_CIRCLE_RADIUS" var="nav_radius"/>
-      <deroute block="land"/>
-    </block>
-    <block name="Land Left AF-TD" strip_button="Land left (wp AF-TD)" strip_icon="land-left.png" group="land">
-      <set value="-DEFAULT_CIRCLE_RADIUS" var="nav_radius"/>
-      <deroute block="land"/>
-    </block>
-    <block name="land">
-      <call fun="nav_compute_baseleg(WP_AF, WP_TD, WP__BASELEG, nav_radius)"/>
-      <circle radius="nav_radius" until="NavCircleCount() > 0.5" wp="_BASELEG"/>
-      <circle radius="nav_radius" until="And(NavQdrCloseTo(DegOfRad(baseleg_out_qdr)-(nav_radius/fabs(nav_radius))*10), 10 > fabs(GetPosAlt() - WaypointAlt(WP__BASELEG)))" wp="_BASELEG"/>
-    </block>
-    <block name="final">
-      <exception cond="GetAltRef() + 10 > GetPosAlt()" deroute="flare"/>
-      <go from="AF" hmode="route" vmode="glide" wp="TD"/>
-    </block>
-    <block name="flare">
-      <go approaching_time="0" from="AF" hmode="route" throttle="0.0" vmode="throttle" wp="TD"/>
-      <attitude roll="0.0" throttle="0.0" until="FALSE" vmode="throttle"/>
-    </block>
-
-
-
-    <block name="Crash">
-      <!--<set value="1" var="kill_throttle"/>-->
-      <attitude roll="1.0" pitch="1.0" throttle="0.0" until="FALSE" vmode="throttle"/>
-    </block>
-
-
   </blocks>
 </flight_plan>

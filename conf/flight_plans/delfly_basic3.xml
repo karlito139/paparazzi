@@ -1,6 +1,7 @@
 <!DOCTYPE flight_plan SYSTEM "flight_plan.dtd">
 
-<flight_plan alt="260" ground_alt="185" lat0="43.46223" lon0="1.27289" max_dist_from_home="1500" name="Basic" security_height="25">
+<flight_plan alt="260" ground_alt="185" lat0="51.990978" lon0="4.378340" max_dist_from_home="1500" name="Basic"
+ security_height="25">
   <header>
 #include "subsystems/datalink/datalink.h"
       #include "subsystems/electrical.h"
@@ -10,8 +11,8 @@
 </header>
   <waypoints>
     <waypoint name="HOME" x="0" y="0"/>
-    <waypoint name="B" x="75.2" y="65.0"/>
-    <waypoint alt="215.0" name="A" x="-53.0" y="76.2"/>
+    <waypoint name="A" x="51.991199" y="4.378214" alt="3.0" />
+    <waypoint name="B" x="51.990758" y="4.378519" alt="3.0" />
     <waypoint name="CLIMB" x="-114.5" y="162.3"/>
   </waypoints>
   <exceptions/>
