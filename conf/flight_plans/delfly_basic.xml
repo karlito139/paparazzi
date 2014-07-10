@@ -1,0 +1,61 @@
+<!DOCTYPE flight_plan SYSTEM "flight_plan.dtd">
+
+<flight_plan alt="10" ground_alt="1" lat0="51.990949" lon0="4.378334" max_dist_from_home="500" name="DelFly Basic" security_height="5">
+  <header>
+#include "autopilot.h"
+#include "subsystems/ahrs.h"
+#include "subsystems/electrical.h"
+#include "subsystems/datalink/datalink.h"
+</header>
+  <waypoints>
+    <waypoint name="HOME" x="0.0" y="0.0"/>
+    <waypoint name="CLIMB" x="0.0" y="5.0"/>
+    <waypoint name="Landingspot" x="5.0" y="5.0"/>
+    <waypoint name="_TDEMERGENCY" x="-5.0" y="-5.0"/>
+    <waypoint name="A" x="-8.7" y="0.2" alt="3.0"/>
+    <waypoint name="B" x="7.3" y="-27.2" alt="3.0"/>
+  </waypoints>
+  <exceptions>
+    <exception cond="electrical.bat_critical && !(nav_block == IndexOfBlock('Setting home location')) && !(nav_block == IndexOfBlock('Holding point')) && !(nav_block == IndexOfBlock('Land')) && !(nav_block == IndexOfBlock('Emergency'))" deroute="Emergency"/>
+  </exceptions>
+  <blocks>
+    <block name="Setting home location">
+      <set value="1" var="kill_throttle"/>
+      <while cond="!GpsFixValid() || gps.pacc > 1800 || !(ahrs.status == AHRS_RUNNING)"/>
+      <while cond="LessThan(NavBlockTime(), 8)"/>
+      <call fun="NavSetGroundReferenceHere()"/>
+      <call fun="NavSetAltitudeReferenceHere()"/>
+      <call fun="NavSetWaypointHere(WP__TDEMERGENCY)"/>
+      <call fun="NavSetWaypointHere(WP_Landingspot)"/>
+      <call fun="NavSetWaypointHere(WP_HOME)"/>
+      <!--<call fun="NavSetWaypointHere(WP_CLIMB)"/>-->
+    </block>
+    <block name="Holding point">
+      <attitude pitch="0" roll="0" throttle="0" until="FALSE" vmode="throttle"/>
+    </block>
+    <block key="t" name="Takeoff" strip_button="Takeoff" strip_icon="takeoff.png">
+      <call fun="NavSetAltitudeReferenceHere()"/>
+      <!--<call fun="NavSetWaypointHere(WP_CLIMB)"/>-->
+      <call fun="NavSetWaypointHere(WP_Landingspot)"/>
+      <set value="0" var="kill_throttle"/>
+      <set value="0" var="autopilot_flight_time"/>
+      <exception cond="block_time > 180" deroute="Land"/>
+      <stay climb="0.7" until="WaypointAlt(WP_A) > stateGetPositionEnu_f()->z" vmode="climb" wp="CLIMB"/>
+    </block>
+    <block key="m" name="From A to B and back">
+      <go wp="A"/>
+      <go from="A" hmode="route" wp="B"/>
+      <stay until="stage_time > 3" wp="B"/>
+      <go from="B" hmode="route" wp="A"/>
+    </block>
+    <block key="l" name="Land">
+      <go wp="CLIMB"/>
+      <go wp="Landingspot"/>
+      <!--<stay climb="-2.0" vmode="climb" wp="Landingspot"/>-->
+    </block>
+    <block key="e" name="Emergency" strip_button="Emergency" strip_icon="home_emergency.png">
+      <call fun="NavSetWaypointHere(WP__TDEMERGENCY)"/>
+      <stay throttle="0.30" vmode="throttle" wp="_TDEMERGENCY"/>
+    </block>
+  </blocks>
+</flight_plan>
