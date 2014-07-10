@@ -62,9 +62,9 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
       <define name="USE_SERVOS_1AND2"/>
     </subsystem>
 
-    <subsystem name="actuators" type="dualpwm">
+    <!--<subsystem name="actuators" type="dualpwm">
       <define name="DUAL_PWM_ON"/>
-    </subsystem>
+    </subsystem>-->
 
     <!--<subsystem name="ahrs" type="float_dcm"/>-->
     <!--<subsystem name="ahrs" type="int_cmpl_quat"/>-->
@@ -99,10 +99,10 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <servo name="MOTOR" no="4" min="1100" neutral="1100" max="2000"/>
   </servos>
 
-  <servos driver="Dualpwm">
+  <!--<servos driver="Dualpwm">
     <servo name="LEFT_ELERON" no="2" min="1100" neutral="1500" max="1900"/>
     <servo name="RIGHT_ELERON" no="3" min="1100" neutral="1500" max="1900"/>
-  </servos>
+  </servos>-->
 
 
 
@@ -134,8 +134,8 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <set servo="RIGHT_ELERON" value="$elevator + $aileron"/>-->
 
     <!-- T tail configuration -->
-    <set servo="RIGHT_ELERON" value="$elevator"/>
-    <set servo="LEFT_ELERON" value="$aileron"/>
+    <!--<set servo="RIGHT_ELERON" value="$elevator"/>
+    <set servo="LEFT_ELERON" value="$aileron"/>-->
   </command_laws>
 
 
