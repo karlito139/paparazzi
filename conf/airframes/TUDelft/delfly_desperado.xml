@@ -161,12 +161,16 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <define name="ACCEL_Y_SENS" value="4.905" integer="16"/>
     <define name="ACCEL_Z_SENS" value="4.905" integer="16"/>
 
-    <define name="MAG_X_NEUTRAL" value="360"/>  <!-- 847 -->
-    <define name="MAG_Y_NEUTRAL" value="-602"/> <!-- -415 -->
-    <define name="MAG_Z_NEUTRAL" value="-313"/> <!-- -264 -->
-    <define name="MAG_X_SENS" value="3.87956285611" integer="16"/> <!-- 2.43585513661 -->
-    <define name="MAG_Y_SENS" value="4.00524696232" integer="16"/> <!-- 3.71461295002 -->
-    <define name="MAG_Z_SENS" value="4.09474740848" integer="16"/> <!-- 3.4639003008 -->
+
+    <define name="MAG_X_NEUTRAL" value="-349"/>
+    <define name="MAG_Y_NEUTRAL" value="130"/>
+    <define name="MAG_Z_NEUTRAL" value="355"/>
+    <define name="MAG_X_SENS" value="3.66980420844" integer="16"/>
+    <define name="MAG_Y_SENS" value="3.86694176583" integer="16"/>
+    <define name="MAG_Z_SENS" value="4.02840414264" integer="16"/>
+
+
+
 
     <define name="BODY_TO_IMU_PHI" value="-85." unit="deg"/> <!-- Roll -104 -->
     <define name="BODY_TO_IMU_THETA" value="-130." unit="deg"/> <!-- pitch : true value : 180; add 15° of pitching up : -165 -->
