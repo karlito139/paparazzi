@@ -15,7 +15,7 @@ This flightplan should be kept as simple as possible and *not* to be extended wi
   </header>
   <waypoints>
     <waypoint name="HOME" x="0.0" y="0.0"/>
-    <waypoint name="CLIMB" x="0.0" y="10.0"/>
+    <waypoint name="CLIMB" x="0.0" y="-10.0"/>
     <waypoint name="STDBY" x="10.0" y="0.0"/>
     <waypoint name="Landingspot" x="5.0" y="5.0"/>
     <waypoint name="_TDEMERGENCY" x="-5.0" y="-5.0"/>

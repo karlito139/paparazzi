@@ -27,7 +27,7 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
 
       <define name="AUTOPILOT_DISABLE_AHRS_KILL"/>  <!-- NEW -->
     </target>
-    <target name="sim" 			board="pc"/>
+    <target name="sim" board="pc"/>
     <target name="nps" board="pc">
       <subsystem name="fdm" type="jsbsim"/>
       <subsystem name="radio_control" type="ppm"/>
@@ -219,7 +219,7 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
 
 
   <section name="HORIZONTAL CONTROL" prefix="H_CTL_">
-    <define name="COURSE_PGAIN" value="0.1"/>
+    <define name="COURSE_PGAIN" value="0.771"/>
     <define name="COURSE_DGAIN" value="0.05"/>
 
     <define name="ROLL_MAX_SETPOINT" value="70" unit="deg"/>
