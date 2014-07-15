@@ -85,7 +85,10 @@ So you can moved the aircraft around just fine after powerup, as long as you don
       <!--   <exception cond="!autopilot_motors_on" deroute="Takeoff"/>-->
       <set value="0" var="autopilot_flight_time"/>    
       <!-- If take-off to first point takes to long to reach somehow because of some reason, abort flight -->
-     <exception cond="block_time > 180" deroute="Land"/>
+     <!--<exception cond="block_time > 180" deroute="Land"/>-->
+
+
+
      <!-- To make sure that takoff is straight up to the height of first waypoint A, so no sideways take-off, since sideways movements starting at low height from takeoff can have nasty effects) -->
 <!-- In real life aircraft can be blown sideways with strong wind TODO experiment with results of 2 stages 2 -->
 <!-- TODO see if adding this 2nd stage is better -->
