@@ -172,7 +172,7 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
 
 
     <define name="BODY_TO_IMU_PHI" value="-85." unit="deg"/> <!-- Roll -104 -->
-    <define name="BODY_TO_IMU_THETA" value="-130." unit="deg"/> <!-- pitch : true value : 180; add 15° of pitching up : -165 -->
+    <define name="BODY_TO_IMU_THETA" value="-145." unit="deg"/> <!-- pitch : true value : 180; add 15° of pitching up : -165 -->
     <define name="BODY_TO_IMU_PSI" value="0." unit="deg"/> <!-- Yaw -->
   </section>
 
