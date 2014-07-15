@@ -28,14 +28,25 @@ This flightplan should be kept as simple as possible and *not* to be extended wi
     <exception cond="electrical.bat_low && !(nav_block == IndexOfBlock('Setting home location')) && !(nav_block == IndexOfBlock('Holding point')) && !(nav_block == IndexOfBlock('Land')) && !(nav_block == IndexOfBlock('Emergency'))" deroute="Land"/>
     <exception cond="electrical.bat_critical && !(nav_block == IndexOfBlock('Setting home location')) && !(nav_block == IndexOfBlock('Holding point')) && !(nav_block == IndexOfBlock('Land')) && !(nav_block == IndexOfBlock('Emergency'))" deroute="Emergency"/>
     <!-- No connection for some time in flight, then try to land -->
+
+
     <exception cond="datalink_time > 6 && !(nav_block == IndexOfBlock('Setting home location')) && !(nav_block == IndexOfBlock('Holding point')) && !(nav_block == IndexOfBlock('Land')) && !(nav_block == IndexOfBlock('Emergency'))" deroute="Land"/>
+
+
+
     <!-- If somehow the AC isVALUEVALUE higher than initial ground position plus 60m, just land -->
  <!--tofix only in flight   <exception cond="GetPosAlt() > (GetAltRef() + 60)" deroute="Land"/> -->
     <!-- No link for 20 seconds and no GPS valid position fix, but the AC can still hover...however no option to give commands, emergency landing -->
   <!--  <exception cond="And(datalink_time > 20, !GpsFixValid()) && !(nav_block == IndexOfBlock('Setting home location')) && !(nav_block == IndexOfBlock('Holding point')) && !(nav_block == IndexOfBlock('Emergency'))" deroute="Emergency"/>-->
+
+
     <!-- Check if outside a safety circle from where the drone started the climb, if outside come back to where climb was started-->
     <exception cond="(((((WaypointX(WP_CLIMB)) - GetPosX())*((WaypointX(WP_CLIMB)) - GetPosX()))) + ((((WaypointY(WP_CLIMB)) - GetPosY())*((WaypointY(WP_CLIMB)) - GetPosY())))) > (MAX_DIST_FROM_HOME*MAX_DIST_FROM_HOME) && !(nav_block == IndexOfBlock('Setting home location')) && !(nav_block == IndexOfBlock('Holding point')) && !(nav_block == IndexOfBlock('Land')) && !(nav_block == IndexOfBlock('Emergency'))" deroute="Land"/>
+
+
   </exceptions>
+
+
   <blocks>
     <block name="Setting home location"><!-- TODO make sure there is an indicator in simple layout of GCS screen displaying "Waiting for GPS fix..."-->
       <set value="1" var="kill_throttle"/>
