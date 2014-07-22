@@ -69,6 +69,8 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <!--<subsystem name="ahrs" type="int_cmpl_quat"/>-->
     <subsystem name="ahrs" type="int_cmpl_quat">
       <configure name="USE_MAGNETOMETER" value="TRUE"/>
+      <define name="USE_MAGNETOMETER" value="TRUE"/>
+      <configure name="AHRS_USE_GPS_HEADING" value="FALSE"/>
       <define name="AHRS_USE_GPS_HEADING" value="FALSE"/>
     </subsystem>
 
@@ -95,8 +97,8 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
   </servos>
 
   <servos driver="Dualpwm">
-    <servo name="LEFT_ELERON" no="2" min="1900" neutral="1500" max="1100"/>
-    <servo name="RIGHT_ELERON" no="3" min="1100" neutral="1500" max="1900"/>
+    <servo name="RUDDER" no="2" min="1900" neutral="1402" max="1100"/>
+    <servo name="AILERON" no="3" min="1100" neutral="1369" max="1900"/>
   </servos>
 
 
@@ -125,12 +127,12 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <let var="elevator" value="@PITCH * AILEVON_ELEVATOR_RATE"/>
     <set servo="MOTOR" value="@THROTTLE"/>
     <!-- V tail configuration -->
-    <!--<set servo="LEFT_ELERON" value="$elevator - $aileron"/>
-    <set servo="RIGHT_ELERON" value="$elevator + $aileron"/>-->
+    <!--<set servo="RUDDER" value="$elevator - $aileron"/>
+    <set servo="AILERON" value="$elevator + $aileron"/>-->
 
     <!-- T tail configuration -->
-    <set servo="RIGHT_ELERON" value="$elevator"/>
-    <set servo="LEFT_ELERON" value="$aileron"/>
+    <set servo="AILERON" value="$elevator"/>
+    <set servo="RUDDER" value="$aileron"/>
   </command_laws>
 
 
