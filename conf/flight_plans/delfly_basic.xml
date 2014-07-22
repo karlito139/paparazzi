@@ -30,7 +30,7 @@ This flightplan should be kept as simple as possible and *not* to be extended wi
     <!-- No connection for some time in flight, then try to land -->
 
 
-    <exception cond="datalink_time > 6 && !(nav_block == IndexOfBlock('Setting home location')) && !(nav_block == IndexOfBlock('Holding point')) && !(nav_block == IndexOfBlock('Land')) && !(nav_block == IndexOfBlock('Emergency'))" deroute="Land"/>
+    <exception cond="datalink_time > 1500 && !(nav_block == IndexOfBlock('Setting home location')) && !(nav_block == IndexOfBlock('Holding point')) && !(nav_block == IndexOfBlock('Land')) && !(nav_block == IndexOfBlock('Emergency'))" deroute="Land"/>
 
 
 
