@@ -173,7 +173,7 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <define name= "MAG_Y_CURRENT_COEF" value="0.00153949503277"/>
     <define name= "MAG_Z_CURRENT_COEF" value="0.0295034374697"/>
 
-    <define name="BODY_TO_IMU_PHI" value="-90." unit="deg"/> <!-- Roll -104 -->
+    <define name="BODY_TO_IMU_PHI" value="-100." unit="deg"/> <!-- Roll -104 -->
     <define name="BODY_TO_IMU_THETA" value="-160." unit="deg"/> <!-- pitch : true value : 180; add 15° of pitching up : -165 -->
     <define name="BODY_TO_IMU_PSI" value="0." unit="deg"/> <!-- Yaw -->
   </section>
