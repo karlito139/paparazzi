@@ -83,8 +83,8 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
   <modules main_freq="512"> <!-- NEW (512hz) -->
     <load name="baro_sim.xml"/>
     <load name="gps_ubx_ucenter.xml"/>
-   <!-- <load name="send_imu_mag_current.xml"/> --> <!-- NEW -->
     <load name="nav_line.xml"/>
+    <load name="send_imu_mag_current.xml"/>
     <!--<load name="geo_init"/>-->
   </modules>
 
@@ -169,10 +169,12 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <define name="MAG_Y_SENS" value="3.86694176583" integer="16"/>
     <define name="MAG_Z_SENS" value="4.02840414264" integer="16"/>
 
-
+    <define name= "MAG_X_CURRENT_COEF" value="-0.0166153857964"/>
+    <define name= "MAG_Y_CURRENT_COEF" value="0.00153949503277"/>
+    <define name= "MAG_Z_CURRENT_COEF" value="0.0295034374697"/>
 
     <define name="BODY_TO_IMU_PHI" value="-90." unit="deg"/> <!-- Roll -104 -->
-    <define name="BODY_TO_IMU_THETA" value="-145." unit="deg"/> <!-- pitch : true value : 180; add 15° of pitching up : -165 -->
+    <define name="BODY_TO_IMU_THETA" value="-160." unit="deg"/> <!-- pitch : true value : 180; add 15° of pitching up : -165 -->
     <define name="BODY_TO_IMU_PSI" value="0." unit="deg"/> <!-- Yaw -->
   </section>
 
@@ -222,7 +224,7 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
 
 
   <section name="HORIZONTAL CONTROL" prefix="H_CTL_">
-    <define name="COURSE_PGAIN" value="0.1"/>
+    <define name="COURSE_PGAIN" value="0.5"/>
     <define name="COURSE_DGAIN" value="0.05"/>
 
     <define name="ROLL_MAX_SETPOINT" value="70" unit="deg"/>
@@ -259,7 +261,7 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
 
 
   <section name="BAT">
-    <define name="MILLIAMP_AT_FULL_THROTTLE" value="1000"/>
+    <define name="MILLIAMP_AT_FULL_THROTTLE" value="1500"/>
     <define name="BAT_CHECKER_DELAY" value="5"/>
     <define name="CATASTROPHIC_BAT_LEVEL" value="2.0" unit="V"/>
     <define name="CRITIC_BAT_LEVEL" value="2.1" unit="V"/>
