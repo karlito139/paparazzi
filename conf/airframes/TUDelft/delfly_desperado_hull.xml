@@ -86,7 +86,7 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <load name="baro_sim.xml"/>
     <load name="gps_ubx_ucenter.xml"/>
     <load name="nav_line.xml"/>
-    <load name="send_imu_mag_current.xml"/>
+    <!--<load name="send_imu_mag_current.xml"/>-->
     <!--<load name="geo_init"/>-->
   </modules>
 
@@ -98,7 +98,7 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
 
   <servos driver="Dualpwm">
     <servo name="RUDDER" no="2" min="1900" neutral="1402" max="1100"/>
-    <servo name="AILERON" no="3" min="1100" neutral="1369" max="1900"/>
+    <servo name="ELEVATOR" no="3" min="1100" neutral="1369" max="1900"/>
   </servos>
 
 
@@ -123,16 +123,16 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
   </section>
 
   <command_laws>
-    <let var="aileron" value="@ROLL * AILEVON_AILERON_RATE + @YAW * AILEVON_AILERON_RATE / 2 "/>
+    <let var="rudder" value="@ROLL * AILEVON_AILERON_RATE + @YAW * AILEVON_AILERON_RATE / 2 "/>
     <let var="elevator" value="@PITCH * AILEVON_ELEVATOR_RATE"/>
     <set servo="MOTOR" value="@THROTTLE"/>
     <!-- V tail configuration -->
-    <!--<set servo="RUDDER" value="$elevator - $aileron"/>
-    <set servo="AILERON" value="$elevator + $aileron"/>-->
+    <!--<set servo="RUDDER" value="$elevator - $rudder"/>
+    <set servo="ELEVATOR" value="$elevator + $rudder"/>-->
 
     <!-- T tail configuration -->
-    <set servo="AILERON" value="$elevator"/>
-    <set servo="RUDDER" value="$aileron"/>
+    <set servo="ELEVATOR" value="$elevator"/>
+    <set servo="RUDDER" value="$rudder"/>
   </command_laws>
 
 
@@ -288,5 +288,6 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <define name="UNLOCKED_HOME_MODE" value="TRUE"/>
     <define name="RC_LOST_MODE" value="PPRZ_MODE_AUTO2"/>
   </section>
+
 
 </airframe>
