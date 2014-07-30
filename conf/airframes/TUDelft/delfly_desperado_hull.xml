@@ -69,9 +69,7 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <!--<subsystem name="ahrs" type="int_cmpl_quat"/>-->
     <subsystem name="ahrs" type="int_cmpl_quat">
       <configure name="USE_MAGNETOMETER" value="TRUE"/>
-      <define name="USE_MAGNETOMETER" value="TRUE"/>
       <configure name="AHRS_USE_GPS_HEADING" value="FALSE"/>
-      <define name="AHRS_USE_GPS_HEADING" value="FALSE"/>
     </subsystem>
 
     <!--<subsystem name="stabilization" type="int_quat"/>-->
@@ -164,12 +162,21 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <define name="ACCEL_Z_SENS" value="4.905" integer="16"/>
 
 
-    <define name="MAG_X_NEUTRAL" value="-349"/>
+  <!-- delfly beta1 <define name="MAG_X_NEUTRAL" value="-349"/>
     <define name="MAG_Y_NEUTRAL" value="130"/>
     <define name="MAG_Z_NEUTRAL" value="355"/>
     <define name="MAG_X_SENS" value="3.66980420844" integer="16"/>
     <define name="MAG_Y_SENS" value="3.86694176583" integer="16"/>
-    <define name="MAG_Z_SENS" value="4.02840414264" integer="16"/>
+    <define name="MAG_Z_SENS" value="4.02840414264" integer="16"/>-->
+
+<define name="MAG_X_NEUTRAL" value="914"/>
+<define name="MAG_Y_NEUTRAL" value="20"/>
+<define name="MAG_Z_NEUTRAL" value="71"/>
+<define name="MAG_X_SENS" value="3.6433558115" integer="16"/>
+<define name="MAG_Y_SENS" value="4.0497072473" integer="16"/>
+<define name="MAG_Z_SENS" value="4.52432874264" integer="16"/>
+
+
 
     <define name="MAG_X_CURRENT_COEF" value="-0.0166153857964"/>
     <define name="MAG_Y_CURRENT_COEF" value="0.00153949503277"/>
