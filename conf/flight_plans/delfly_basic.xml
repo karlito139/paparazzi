@@ -16,10 +16,10 @@ This flightplan should be kept as simple as possible and *not* to be extended wi
   <waypoints>
     <waypoint name="HOME" x="0.0" y="0.0"/>
     <waypoint name="CLIMB" x="0.0" y="-10.0"/>
-    <waypoint name="STDBY" x="10.0" y="0.0"/>
+    <waypoint name="STDBY" x="5.0" y="-13.0"/>
     <waypoint name="Landingspot" x="5.0" y="5.0"/>
     <waypoint name="_TDEMERGENCY" x="-5.0" y="-5.0"/>
-    <waypoint name="A" x="5" y="-10" height="8"/>
+    <waypoint name="A" x="5.0" y="-13" height="8"/>
     <waypoint name="B" x="20" y="-30" height="8"/>
   </waypoints>
   <exceptions>
@@ -85,7 +85,7 @@ So you can moved the aircraft around just fine after powerup, as long as you don
       <!--   <exception cond="!autopilot_motors_on" deroute="Takeoff"/>-->
       <set value="0" var="autopilot_flight_time"/>    
       <!-- If take-off to first point takes to long to reach somehow because of some reason, abort flight -->
-     <!--<exception cond="block_time > 180" deroute="Land"/>-->
+     <exception cond="block_time > 180" deroute="Land"/>
 
 
 
@@ -95,6 +95,8 @@ So you can moved the aircraft around just fine after powerup, as long as you don
    <!--  <attitude pitch="0" roll="0" throttle="0.90" until="stage_time > 2" vmode="throttle"/>-->
 <!--Alternative <exception cond="WaypointAlt(WP_A) > stateGetPositionEnu_f()->z" deroute="A_to_B_and_back"/>-->
      <!--<stay vmode="climb" climb="0.7" until="WaypointAlt(WP_A) > stateGetPositionEnu_f()->z" wp="CLIMB"/>-->
+
+      <set value="1" var="launch"/>
       <go throttle="1.0" vmode="throttle" until="(WaypointAlt(WP_A)/2) > stateGetPositionEnu_f()->z" wp="CLIMB" pitch="15"/>
     </block>
     <block key="Ctrl+a" name="Standby" strip_button="Standby" strip_icon="home.png" group="home">
