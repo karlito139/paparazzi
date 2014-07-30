@@ -157,9 +157,9 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <define name="ACCEL_Y_NEUTRAL" value="0"/>
     <define name="ACCEL_Z_NEUTRAL" value="0"/>
 
-    <define name="ACCEL_X_SENS" value="4.905" integer="16"/>
-    <define name="ACCEL_Y_SENS" value="4.905" integer="16"/>
-    <define name="ACCEL_Z_SENS" value="4.905" integer="16"/>
+    <define name="ACCEL_X_SENS" value="9.81" integer="16"/>	<!-- 4.905 -->
+    <define name="ACCEL_Y_SENS" value="9.81" integer="16"/>
+    <define name="ACCEL_Z_SENS" value="9.81" integer="16"/>
 
 
   <!-- delfly beta1 <define name="MAG_X_NEUTRAL" value="-349"/>
@@ -182,8 +182,8 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <define name="MAG_Y_CURRENT_COEF" value="0.00153949503277"/>
     <define name="MAG_Z_CURRENT_COEF" value="0.0295034374697"/>
 
-    <define name="BODY_TO_IMU_PHI" value="-100." unit="deg"/> <!-- Roll -104 -->
-    <define name="BODY_TO_IMU_THETA" value="-160." unit="deg"/> <!-- pitch : true value : 180; add 15° of pitching up : -165 -->
+    <define name="BODY_TO_IMU_PHI" value="-96." unit="deg"/> <!-- Roll -104 -->
+    <define name="BODY_TO_IMU_THETA" value="-157." unit="deg"/> <!-- pitch : true value : 180; add 15° of pitching up : -165 -->
     <define name="BODY_TO_IMU_PSI" value="0." unit="deg"/> <!-- Yaw -->
   </section>
 
@@ -207,21 +207,21 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
 
 
   <section name="VERTICAL CONTROL" prefix="V_CTL_">
-    <define name="POWER_CTL_BAT_NOMINAL" value="3.7" unit="volt"/>
+    <define name="POWER_CTL_BAT_NOMINAL" value="4.2" unit="volt"/>
     <!-- outer loop proportional gain -->
-    <define name="ALTITUDE_PGAIN" value="0.119"/>
+    <define name="ALTITUDE_PGAIN" value="0.100"/>
     <!-- outer loop saturation -->
-    <define name="ALTITUDE_MAX_CLIMB" value="2."/>
+    <define name="ALTITUDE_MAX_CLIMB" value="4."/>
 
     <!-- auto throttle inner loop -->
-    <define name="AUTO_THROTTLE_NOMINAL_CRUISE_THROTTLE" value="0.9"/>
-    <define name="AUTO_THROTTLE_MIN_CRUISE_THROTTLE" value="0.80"/>
+    <define name="AUTO_THROTTLE_NOMINAL_CRUISE_THROTTLE" value="0.5"/>
+    <define name="AUTO_THROTTLE_MIN_CRUISE_THROTTLE" value="0.2"/>
     <define name="AUTO_THROTTLE_MAX_CRUISE_THROTTLE" value="0.99"/>
     <define name="AUTO_THROTTLE_LOITER_TRIM" value="1500"/>
-    <define name="AUTO_THROTTLE_DASH_TRIM" value="-4000"/>
+    <define name="AUTO_THROTTLE_DASH_TRIM" value="-1000"/>
     <define name="AUTO_THROTTLE_CLIMB_THROTTLE_INCREMENT" value="0.15" unit="%/(m/s)"/>
     <define name="AUTO_THROTTLE_PGAIN" value="0.04"/>
-    <define name="AUTO_THROTTLE_IGAIN" value="0.3"/>
+    <define name="AUTO_THROTTLE_IGAIN" value="0.03"/>
     <define name="AUTO_THROTTLE_PITCH_OF_VZ_PGAIN" value="0.08"/>
 
     <define name="THROTTLE_SLEW_LIMITER" value="0.06" unit="s"/>
@@ -233,29 +233,29 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
 
 
   <section name="HORIZONTAL CONTROL" prefix="H_CTL_">
-    <define name="COURSE_PGAIN" value="0.65"/>
-    <define name="COURSE_DGAIN" value="0.15"/>
+    <define name="COURSE_PGAIN" value="1.2"/>
+    <define name="COURSE_DGAIN" value="0.3"/>
 
-    <define name="ROLL_MAX_SETPOINT" value="69.9999727845" unit="deg"/>
-    <define name="PITCH_MAX_SETPOINT" value="80" unit="deg"/>
-    <define name="PITCH_MIN_SETPOINT" value="-80" unit="deg"/>
+    <define name="ROLL_MAX_SETPOINT" value="45" unit="deg"/>
+    <define name="PITCH_MAX_SETPOINT" value="30" unit="deg"/>
+    <define name="PITCH_MIN_SETPOINT" value="-25" unit="deg"/>
 
-    <define name="PITCH_PGAIN" value="13778"/>	<!--  -->
-    <define name="PITCH_DGAIN" value="20"/>
+    <define name="PITCH_PGAIN" value="15000"/>
+    <define name="PITCH_DGAIN" value="10"/>
 
-    <define name="ELEVATOR_OF_ROLL" value="800"/>
+    <define name="ELEVATOR_OF_ROLL" value="2500"/>
 
     <define name="ROLL_SLEW" value="1000"/>
 
-    <define name="ROLL_ATTITUDE_GAIN" value="8500"/> <!--  -->
-    <define name="ROLL_RATE_GAIN" value="1500"/>	<!-- 1500 -->
+    <define name="ROLL_ATTITUDE_GAIN" value="7500"/>
+    <define name="ROLL_RATE_GAIN" value="300"/>
   </section>
 
 
 
   <section name="FAILSAFE" prefix="FAILSAFE_">
     <define name="DELAY_WITHOUT_GPS" value="5" unit="s"/>
-    <define name="DEFAULT_THROTTLE" value="0"/>
+    <define name="DEFAULT_THROTTLE" value="0.4"/>
     <define name="DEFAULT_ROLL" value="5000"/>
     <define name="DEFAULT_PITCH" value="3000"/>
   </section>
@@ -290,7 +290,7 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <define name="CARROT" value="3." unit="s"/>
     <define name="KILL_MODE_DISTANCE" value="(1.5*MAX_DIST_FROM_HOME)"/>
     <define name="CONTROL_FREQUENCY" value="120" unit="Hz"/>
-    <define name="DEFAULT_CIRCLE_RADIUS" value="10."/>
+    <define name="DEFAULT_CIRCLE_RADIUS" value="12."/>
 
     <define name="UNLOCKED_HOME_MODE" value="TRUE"/>
     <define name="RC_LOST_MODE" value="PPRZ_MODE_AUTO2"/>
