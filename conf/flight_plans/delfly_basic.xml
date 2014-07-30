@@ -15,12 +15,12 @@ This flightplan should be kept as simple as possible and *not* to be extended wi
   </header>
   <waypoints>
     <waypoint name="HOME" x="0.0" y="0.0"/>
-    <waypoint name="CLIMB" x="0.0" y="-10.0"/>
-    <waypoint name="STDBY" x="5.0" y="-13.0"/>
+    <waypoint name="CLIMB" x="12.0" y="0.0"/>
+    <waypoint name="STDBY" x="8.5" y="-14.0"/>
     <waypoint name="Landingspot" x="5.0" y="5.0"/>
     <waypoint name="_TDEMERGENCY" x="-5.0" y="-5.0"/>
-    <waypoint name="A" x="5.0" y="-13" height="8"/>
-    <waypoint name="B" x="20" y="-30" height="8"/>
+    <waypoint name="A" x="-4.0" y="-10" height="8"/>
+    <waypoint name="B" x="3.0" y="-25" height="8"/>
   </waypoints>
   <exceptions>
     <!-- Check if battery voltage is low, then try to go to block Land. This is deemed better than to land at that very spot since that can be above something unknown, 
