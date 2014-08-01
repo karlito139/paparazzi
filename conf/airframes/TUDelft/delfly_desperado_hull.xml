@@ -276,7 +276,7 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <define name="CRITIC_BAT_LEVEL" value="2.1" unit="V"/>
     <define name="LOW_BAT_LEVEL" value="2.2" unit="V"/>
     <define name="MAX_BAT_LEVEL" value="4.1" unit="V"/>
-    <!--<define name="VoltageOfAdc(adc)" value ="8"/>-->
+    <define name="VoltageOfAdc(adc)" value ="(0.0052*adc)"/>
   </section>
 
 
