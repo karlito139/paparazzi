@@ -175,9 +175,9 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <define name="MAG_Y_SENS" value="4.0497072473" integer="16"/>
     <define name="MAG_Z_SENS" value="4.52432874264" integer="16"/>
 
-    <define name="MAG_X_CURRENT_COEF" value="-0.0166153857964"/>
-    <define name="MAG_Y_CURRENT_COEF" value="0.00153949503277"/>
-    <define name="MAG_Z_CURRENT_COEF" value="0.0295034374697"/>
+    <!--<define name="MAG_X_CURRENT_COEF" value="-0.0166153857964"/>
+    <define name="MAG_Y_CURRENT_COEF" value="0.00153949503277"/>-
+    <define name="MAG_Z_CURRENT_COEF" value="0.0295034374697"/>-->
 
     <define name="BODY_TO_IMU_PHI" value="-96." unit="deg"/> <!-- Roll -104 -->
     <define name="BODY_TO_IMU_THETA" value="-157." unit="deg"/> <!-- pitch : true value : 180; add 15° of pitching up : -165 -->
