@@ -157,10 +157,9 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <define name="ACCEL_Y_NEUTRAL" value="0"/>
     <define name="ACCEL_Z_NEUTRAL" value="0"/>
 
-    <define name="ACCEL_X_SENS" value="9.81" integer="16"/>	<!-- 4.905 -->
-    <define name="ACCEL_Y_SENS" value="9.81" integer="16"/>
-    <define name="ACCEL_Z_SENS" value="9.81" integer="16"/>
-
+    <define name="ACCEL_X_SENS" value="4.905" integer="16"/>	<!-- 4.905/9.81 -->
+    <define name="ACCEL_Y_SENS" value="4.905" integer="16"/>
+    <define name="ACCEL_Z_SENS" value="4.905" integer="16"/>
 
   <!-- delfly beta1 <define name="MAG_X_NEUTRAL" value="-349"/>
     <define name="MAG_Y_NEUTRAL" value="130"/>
@@ -169,14 +168,12 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <define name="MAG_Y_SENS" value="3.86694176583" integer="16"/>
     <define name="MAG_Z_SENS" value="4.02840414264" integer="16"/>-->
 
-<define name="MAG_X_NEUTRAL" value="914"/>
-<define name="MAG_Y_NEUTRAL" value="20"/>
-<define name="MAG_Z_NEUTRAL" value="71"/>
-<define name="MAG_X_SENS" value="3.6433558115" integer="16"/>
-<define name="MAG_Y_SENS" value="4.0497072473" integer="16"/>
-<define name="MAG_Z_SENS" value="4.52432874264" integer="16"/>
-
-
+    <define name="MAG_X_NEUTRAL" value="914"/>
+    <define name="MAG_Y_NEUTRAL" value="20"/>
+    <define name="MAG_Z_NEUTRAL" value="71"/>
+    <define name="MAG_X_SENS" value="3.6433558115" integer="16"/>
+    <define name="MAG_Y_SENS" value="4.0497072473" integer="16"/>
+    <define name="MAG_Z_SENS" value="4.52432874264" integer="16"/>
 
     <define name="MAG_X_CURRENT_COEF" value="-0.0166153857964"/>
     <define name="MAG_Y_CURRENT_COEF" value="0.00153949503277"/>
@@ -211,14 +208,14 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <!-- outer loop proportional gain -->
     <define name="ALTITUDE_PGAIN" value="0.100"/>
     <!-- outer loop saturation -->
-    <define name="ALTITUDE_MAX_CLIMB" value="4."/>
+    <define name="ALTITUDE_MAX_CLIMB" value="2."/>
 
     <!-- auto throttle inner loop -->
-    <define name="AUTO_THROTTLE_NOMINAL_CRUISE_THROTTLE" value="0.5"/>
-    <define name="AUTO_THROTTLE_MIN_CRUISE_THROTTLE" value="0.2"/>
+    <define name="AUTO_THROTTLE_NOMINAL_CRUISE_THROTTLE" value="0.9"/>
+    <define name="AUTO_THROTTLE_MIN_CRUISE_THROTTLE" value="0.7"/>
     <define name="AUTO_THROTTLE_MAX_CRUISE_THROTTLE" value="0.99"/>
     <define name="AUTO_THROTTLE_LOITER_TRIM" value="1500"/>
-    <define name="AUTO_THROTTLE_DASH_TRIM" value="-1000"/>
+    <define name="AUTO_THROTTLE_DASH_TRIM" value="-4000"/>
     <define name="AUTO_THROTTLE_CLIMB_THROTTLE_INCREMENT" value="0.15" unit="%/(m/s)"/>
     <define name="AUTO_THROTTLE_PGAIN" value="0.04"/>
     <define name="AUTO_THROTTLE_IGAIN" value="0.03"/>
@@ -243,19 +240,19 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <define name="PITCH_PGAIN" value="15000"/>
     <define name="PITCH_DGAIN" value="10"/>
 
-    <define name="ELEVATOR_OF_ROLL" value="2500"/>
+    <define name="ELEVATOR_OF_ROLL" value="800"/>
 
     <define name="ROLL_SLEW" value="1000"/>
 
-    <define name="ROLL_ATTITUDE_GAIN" value="7500"/>
-    <define name="ROLL_RATE_GAIN" value="300"/>
+    <define name="ROLL_ATTITUDE_GAIN" value="8500"/>
+    <define name="ROLL_RATE_GAIN" value="1500"/>
   </section>
 
 
 
   <section name="FAILSAFE" prefix="FAILSAFE_">
     <define name="DELAY_WITHOUT_GPS" value="5" unit="s"/>
-    <define name="DEFAULT_THROTTLE" value="0.4"/>
+    <define name="DEFAULT_THROTTLE" value="0.0"/>
     <define name="DEFAULT_ROLL" value="5000"/>
     <define name="DEFAULT_PITCH" value="3000"/>
   </section>
