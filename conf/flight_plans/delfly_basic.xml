@@ -22,6 +22,7 @@ This flightplan should be kept as simple as possible and *not* to be extended wi
     <waypoint name="_TDEMERGENCY" x="-5.0" y="-5.0"/>
     <waypoint name="A" x="-4.0" y="-10"/>
     <waypoint name="B" x="3.0" y="-25"/>
+    <waypoint name="B_high" x="3.0" y="-27" height="15"/>
   </waypoints>
   <exceptions>
     <!-- Check if battery voltage is low, then try to go to block Land. This is deemed better than to land at that very spot since that can be above something unknown, 
@@ -108,6 +109,9 @@ So you can moved the aircraft around just fine after powerup, as long as you don
     </block>
     <block name="Oval A-B" strip_button="Oval (wp A-B)" strip_icon="oval.png" group="base_pattern">
       <oval p1="A" p2="B" radius="nav_radius"/>
+    </block>
+    <block name="Oval A-B_high" strip_button="Oval (wp A-B_high)" strip_icon="oval.png" group="base_pattern">
+      <oval p1="A" p2="B_high" radius="nav_radius"/>
     </block>
 <!-- The From A to B and back, The only one visible block so no GCS choices to toy around with, a non expert would get confused -->
     <block key="m" name="From A to B and back">
