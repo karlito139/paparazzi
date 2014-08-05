@@ -68,8 +68,8 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <!--<subsystem name="ahrs" type="float_dcm"/>-->
     <!--<subsystem name="ahrs" type="int_cmpl_quat"/>-->
     <subsystem name="ahrs" type="int_cmpl_quat">
-      <configure name="USE_MAGNETOMETER" value="TRUE"/>
-      <configure name="AHRS_USE_GPS_HEADING" value="FALSE"/>
+      <configure name="USE_MAGNETOMETER" value="FALSE"/>
+      <configure name="AHRS_USE_GPS_HEADING" value="TRUE"/>
     </subsystem>
 
     <!--<subsystem name="stabilization" type="int_quat"/>-->
@@ -84,9 +84,19 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
     <load name="baro_sim.xml"/>
     <load name="gps_ubx_ucenter.xml"/>
     <load name="nav_line.xml"/>
+    <!--<load name="nav_catapult.xml"/>-->
     <!--<load name="send_imu_mag_current.xml"/>-->
     <!--<load name="geo_init"/>-->
   </modules>
+
+
+  <!--<section name="CATAPULT" prefix="NAV_CATAPULT_" >
+    <define name="MOTOR_DELAY" value="0.1" unit="seconds"/>
+    <define name="HEADING_DELAY" value="2.0" unit="seconds"/>
+    <define name="ACCELERATION_THRESHOLD" value="0.2"/>
+    <define name="INITIAL_PITCH" value="5" unit="deg"/>
+    <define name="INITIAL_THROTTLE" value="1.0" />
+  </section>-->
 
 
 
