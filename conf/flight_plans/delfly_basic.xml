@@ -112,6 +112,7 @@ So you can moved the aircraft around just fine after powerup, as long as you don
       <oval p1="A" p2="B" radius="nav_radius"/>
     </block>
     <block name="Oval A-B_high" strip_button="Oval (wp A-B_high)" strip_icon="oval.png" group="base_pattern">
+      <set value="-DEFAULT_CIRCLE_RADIUS" var="nav_radius"/>
       <oval p1="A" p2="B_high" radius="nav_radius"/>
     </block>
 <!-- The From A to B and back, The only one visible block so no GCS choices to toy around with, a non expert would get confused -->
