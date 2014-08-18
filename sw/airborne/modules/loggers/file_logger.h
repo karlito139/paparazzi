@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2013 The Paparazzi Team
+ * Copyright (C) 2014 Freek van Tienen <freek.v.tienen@gmail.com>
  *
  * This file is part of paparazzi.
  *
@@ -17,21 +17,18 @@
  * along with paparazzi; see the file COPYING.  If not, write to
  * the Free Software Foundation, 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
- */
-
-/**
- * @file arch/sim/subsystems/settings_arch.c
- * Sim arch Persistent settings.
  *
- * Unimplemented.
  */
 
-#include "subsystems/settings.h"
+/** @file modules/loggers/file_logger.h
+ *  @brief File logger for Linux based autopilots
+ */
 
-int32_t persistent_write(uint32_t ptr UNUSED, uint32_t size UNUSED) {
-  return -1;
-}
+#ifndef FILE_LOGGER_H_
+#define FILE_LOGGER_H_
 
-int32_t persistent_read(uint32_t ptr UNUSED, uint32_t size UNUSED) {
-  return -1;
-}
+extern void file_logger_start(void);
+extern void file_logger_stop(void);
+extern void file_logger_periodic(void);
+
+#endif /* FILE_LOGGER_H_ */

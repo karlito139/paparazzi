@@ -56,7 +56,7 @@ struct EnuCoor_i navigation_carrot;
 
 struct EnuCoor_i nav_last_point;
 
-uint8_t last_wp __attribute__ ((unused));
+uint8_t last_wp UNUSED;
 
 /** Maximum distance from HOME waypoint before going into failsafe mode */
 #ifndef FAILSAFE_MODE_DISTANCE
@@ -180,7 +180,7 @@ void nav_init(void) {
 #endif
 }
 
-static inline void nav_advance_carrot(void) {
+static inline void UNUSED nav_advance_carrot(void) {
   struct EnuCoor_i *pos = stateGetPositionEnu_i();
   /* compute a vector to the waypoint */
   struct Int32Vect2 path_to_waypoint;
@@ -409,6 +409,7 @@ void nav_move_waypoint_lla(uint8_t wp_id, struct LlaCoor_i* new_lla_pos) {
   if (stateIsLocalCoordinateValid()) {
     struct EnuCoor_i enu;
     enu_of_lla_point_i(&enu, &state.ned_origin_i, new_lla_pos);
+    // convert ENU pos from cm to BFP with INT32_POS_FRAC
     enu.x = POS_BFP_OF_REAL(enu.x)/100;
     enu.y = POS_BFP_OF_REAL(enu.y)/100;
     enu.z = POS_BFP_OF_REAL(enu.z)/100;
