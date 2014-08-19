@@ -13,12 +13,14 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
         <!-- graupner (orange RX) : 3327503026, graupner (spektrum 9) : 4095452533 -->
         <!-- use 0x for the hex version -->
         <!-- 3411796053 -->
-        <define name="RADIO_TRANSMITTER_ID" value="0xCB5BE055"/>    <!-- TX2 (if remember well) : 0xCB5BE055 -->
+        <define name="RADIO_TRANSMITTER_ID" value="0xCB5BE055"/>    <!-- TX2 : 0xCB5BE055 -->
         <define name="RADIO_TRANSMITTER_PROTOCOL" value="DSM_DSM2_2"/>
         <!--<define name="RADIO_TRANSMITTER_PROTOCOL" value="0x01"/>--> <!-- DSM_DSM2_1 -->
         <define name="RADIO_TRANSMITTER_CHAN" value="9"/>
         <define name="RADIO_MODE" value="RADIO_GEAR"/>  <!-- RADIO_FLAP -->
       </subsystem>
+
+      <define name="USE_PERSISTENT_SETTINGS" value="TRUE"/>
 
       <!-- the  periodic frequency is 60 by default in fixed wing, 512 in rotorcraft -->
       <!-- AHRS_PROPAGATE_FREQUENCY mus be < PERIODIC_FREQUENCY -->
