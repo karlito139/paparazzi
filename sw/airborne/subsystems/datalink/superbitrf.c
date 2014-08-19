@@ -409,19 +409,35 @@ void superbitrf_event(void) {
       #endif
       #ifdef RADIO_TRANSMITTER_CHAN
         PRINT_CONFIG_VAR(RADIO_TRANSMITTER_CHAN);
-        if (superbitrf.num_channels == 0) {
+        #if USE_PERSISTENT_SETTINGS
+          if (superbitrf.num_channels == 0) {
+            superbitrf.num_channels = RADIO_TRANSMITTER_CHAN;
+          }
+        #else
           superbitrf.num_channels = RADIO_TRANSMITTER_CHAN;
-        }
+        #endif
       #endif
-        if (superbitrf.protocol == 0) {
-          superbitrf_set_protocol(superbitrf.protocol);
-        }
-      #ifdef RADIO_TRANSMITTER_PROTOCOL
-        else {
+
+
+      #if USE_PERSISTENT_SETTINGS
+          if (superbitrf.protocol == 0) {
+            superbitrf_set_protocol(superbitrf.protocol);
+          }
+        #ifdef RADIO_TRANSMITTER_PROTOCOL
+          else {
+            PRINT_CONFIG_VAR(RADIO_TRANSMITTER_PROTOCOL);
+            superbitrf_set_protocol(RADIO_TRANSMITTER_PROTOCOL);
+          }
+        #endif
+      #else
+        #ifdef RADIO_TRANSMITTER_PROTOCOL
           PRINT_CONFIG_VAR(RADIO_TRANSMITTER_PROTOCOL);
           superbitrf_set_protocol(RADIO_TRANSMITTER_PROTOCOL);
-        }
+        #endif
       #endif
+
+
+
 
         // Start transfer
         superbitrf.state = 0;
