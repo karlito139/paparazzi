@@ -20,7 +20,7 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
         <define name="RADIO_MODE" value="RADIO_GEAR"/>  <!-- RADIO_FLAP -->
       </subsystem>
 
-      <define name="USE_PERSISTENT_SETTINGS" value="TRUE"/>
+      <define name="USE_PERSISTENT_SETTINGS" value="FALSE"/>
 
       <!-- the  periodic frequency is 60 by default in fixed wing, 512 in rotorcraft -->
       <!-- AHRS_PROPAGATE_FREQUENCY mus be < PERIODIC_FREQUENCY -->
@@ -107,8 +107,8 @@ Lisa/S v1.0 board (http://wiki.paparazziuav.org/wiki/Lisa/S)
   </servos>
 
   <servos driver="Dualpwm">
-    <servo name="RUDDER" no="2" min="1900" neutral="1402" max="1100"/>
-    <servo name="ELEVATOR" no="3" min="1100" neutral="1369" max="1900"/>
+    <servo name="RUDDER" no="2" min="1900" neutral="1640" max="1100"/>
+    <servo name="ELEVATOR" no="3" min="1100" neutral="1369" max="1800"/>  <!-- 1700 -->
   </servos>
 
 
