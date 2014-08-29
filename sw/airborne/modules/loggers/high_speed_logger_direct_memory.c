@@ -1175,13 +1175,12 @@ void high_speed_logger_direct_memory_periodic(void)
   //SPI part (to log the values on the memory when in flight)
   if(memory_ready){
 
-    switch(logging_status_gui){
+    /*switch(logging_status_gui){
 
       case 0 :  //idle state, nothing to do
                 break;
 
       case 1 :  //start a new log
-                UART1Transmit('p');
                 if(!start_new_log()) logging_status_gui=0;
                 break;
 
@@ -1197,8 +1196,14 @@ void high_speed_logger_direct_memory_periodic(void)
       default : break;
     }
 
-    run_memory_management();
+    run_memory_management();*/
+
+    memory_send_wren();
+
+
   }
+
+
 
   //this function regulats itself, we have to call it at every iteration of the module
   send_buffer_to_uart();

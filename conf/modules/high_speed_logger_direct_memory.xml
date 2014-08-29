@@ -16,7 +16,6 @@
     <define name="HIGH_SPEED_LOGGER_DIRECT_MEMORY_DEVICE" value="spi1" />
     <define name="HIGH_SPEED_LOGGER_DIRECT_MEMORY_SLAVE_NUMBER" value="SPI_SLAVE1" />
 
-
     <!--taken from ahrs_chimu_uart   B115200/B230400/B921600-->
     <define name="USE_UART3" value="1"/>
     <define name="UART3_BAUD" value="B115200"/>
