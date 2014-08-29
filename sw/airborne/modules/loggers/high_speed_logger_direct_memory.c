@@ -256,6 +256,26 @@ void memory_read_status_1(void){
   spi_submit(&(HIGH_SPEED_LOGGER_DIRECT_MEMORY_DEVICE), &memory_transaction);
 }
 
+
+void memory_write_status_1(uint8_t status){
+
+  memory_ready = FALSE;
+  msg[0] = 0x01;
+
+  msg[1] = status;
+
+  memory_transaction.output_buf    = (uint8_t*) msg;
+  memory_transaction.output_length = 2;
+
+  memory_transaction.input_buf = (NULL;
+  memory_transaction.input_length = 0;
+
+  memory_transaction.after_cb = memory_read_status_cb;
+
+  spi_submit(&(HIGH_SPEED_LOGGER_DIRECT_MEMORY_DEVICE), &memory_transaction);
+}
+
+
 /** \brief Callback function decrypting the status Byte of the memory.
   *
   * The resulting value will be setted in the global variable "memory_status_byte".
@@ -328,7 +348,7 @@ void memory_write_values(uint32_t mem_addr, uint8_t *values, uint8_t size){
 
   uint8_t* addr = (uint8_t*) &mem_addr;
   uint8_t i;
-  extern uint8_t index_send_values = 0;
+  static uint8_t index_send_values = 0;
 
   memory_ready = FALSE;
   values_send_buffer[0] = 0xAD; //0x12
@@ -991,7 +1011,10 @@ uint8_t start_new_log(void){
 
   switch(start_log_status){
 
-    case 0 :  current_writting_addr = 0x00000000; //restart the writting at the begining of the memory
+    case 0 :  
+              memory_write_status_1(0x00);
+
+              current_writting_addr = 0x00000000; //restart the writting at the begining of the memory
               current_unerased_addr = 0x00000000;
 
               if(ERASE_MEMORY_AT_START){
