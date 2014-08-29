@@ -41,7 +41,7 @@
 #define ERASE_MEMORY_AT_START 0   // if we completly erase the memory at the start of the log.
 #define SIZE_OF_LOGGED_VALUES 4   // size (in bytes) of the values we log.
 #define SIZE_OF_VALUES_NAMES 10   // size (in characters) of the nameof the logged values.
-#define SKIP_X_CALLS_BETWEEN_VALUES 10  //Skip X values between write. if = 2 we writte a values, then the next two calls to the modules will not add any values to the memory, then the third will add a new values
+#define SKIP_X_CALLS_BETWEEN_VALUES 200  //Skip X values between write. if = 2 we writte a values, then the next two calls to the modules will not add any values to the memory, then the third will add a new values
 
 #define NBR_VALUES_TO_LOG 9   // nbr of messages you want to log
 
