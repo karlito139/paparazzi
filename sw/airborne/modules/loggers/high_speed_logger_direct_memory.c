@@ -359,18 +359,12 @@ void memory_write_values(uint32_t mem_addr, uint8_t *values, uint8_t size){
 
   mem_addr += index_buffer_send;
 
-  /*for(i=0; i<MEMORY_ADDRESS_SIZE; i++){
-
-    values_send_buffer[i+1] = addr[MEMORY_ADDRESS_SIZE-1-i];    
-  }*/
-
   values_send_buffer[1] = addr[2];   
   values_send_buffer[2] = addr[1];   
   values_send_buffer[3] = addr[0];   
 
   values_send_buffer[4] = values[index_buffer_send];
   index_buffer_send++;
-
 
 
   memory_send_value_transaction.output_buf    = (uint8_t*) values_send_buffer;
@@ -383,6 +377,8 @@ void memory_write_values(uint32_t mem_addr, uint8_t *values, uint8_t size){
 
   spi_submit(&(HIGH_SPEED_LOGGER_DIRECT_MEMORY_DEVICE), &memory_send_value_transaction);
 }
+
+
 
 /** \brief Function sending a request to read some values in memory
   *
@@ -415,6 +411,8 @@ void memory_read_values(uint32_t mem_addr, uint8_t size){
 
   spi_submit(&(HIGH_SPEED_LOGGER_DIRECT_MEMORY_DEVICE), &memory_transaction);
 }
+
+
 
 /** \brief Callback function decrypting the read values from the memory
   *
@@ -1019,7 +1017,8 @@ uint8_t start_new_log(void){
 
   switch(start_log_status){
 
-    case 0 :  memory_send_EWSR();
+    case 0 :  memory_send_wrdi();
+              memory_send_EWSR();
               memory_write_status_1(0x00);
               start_log_status=1;
 
