@@ -375,18 +375,22 @@ void memory_write_values(uint32_t mem_addr, uint8_t *values, uint8_t size){
 
   values_send_buffer[0] = 0x02; //0x12
 
-  for(i=0; i<MEMORY_ADDRESS_SIZE; i++){
+  /*for(i=0; i<MEMORY_ADDRESS_SIZE; i++){
 
     values_send_buffer[i+1] = addr[MEMORY_ADDRESS_SIZE-1-i];    
-  }
+  }*/
 
-  values_send_buffer[MEMORY_ADDRESS_SIZE] = values[index_buffer_send];
+  values_send_buffer[1] = addr[2];   
+  values_send_buffer[2] = addr[1];   
+  values_send_buffer[3] = addr[0];   
+
+  values_send_buffer[4] = values[index_buffer_send];
   index_buffer_send++;
 
 
 
   memory_send_value_transaction.output_buf    = (uint8_t*) values_send_buffer;
-  memory_send_value_transaction.output_length = MEMORY_ADDRESS_SIZE+2;
+  memory_send_value_transaction.output_length = 5;
 
   memory_send_value_transaction.input_buf = NULL;
   memory_send_value_transaction.input_length = 0;
@@ -520,7 +524,7 @@ uint8_t ml_write_values_to_memory(uint32_t mem_addr, uint8_t *values, uint8_t si
              //The low level functions are not using the same buffers
              //so we can do it
 
-    case 2 : memory_write_values(mem_addr, values, size);
+    case 2 :  memory_write_values(mem_addr, values, size);
 
               if(index_buffer_send >= size){
 
@@ -531,7 +535,7 @@ uint8_t ml_write_values_to_memory(uint32_t mem_addr, uint8_t *values, uint8_t si
 
                 ml_write_values_to_memory_status = 1;
               }
-             break;
+              break;
 
     case 3 :  memory_read_status_1();  //we wait for the writting to be done
               if( (wait_answear_from_reading_memory) || (memory_status_byte) ) ml_write_values_to_memory_status=3;
