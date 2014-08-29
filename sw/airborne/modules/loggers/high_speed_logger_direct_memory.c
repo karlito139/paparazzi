@@ -577,7 +577,7 @@ uint8_t ml_erase_4k_on_memory(uint32_t mem_addr){
              break;
 
     case 2 :  memory_read_status_1();  //we wait for the writting to be done
-              if( (wait_answear_from_reading_memory) || (memory_status_byte) ){
+              if( (wait_answear_from_reading_memory) || (memory_status_byte & 0x01) ){
 
                 ml_erase_4k_on_memory_status=2;
               }
