@@ -93,7 +93,7 @@ char **name_of_the_values = (char *[SIZE_OF_VALUES_NAMES]){
 #define MEMORY_READ_LATTENCY 5  //nbr of Bytes 0x00 received before the real values when reading the memory
 #define TOTAL_MEMORY_SIZE 32  //nbr of MB in the memory
 #define END_OF_MEMORY_THRESHOLD 10  //the nbr of kilo Bytes left at the end of the memory before stoping the log automaticaly
-
+#define MEMORY_ADDRESS_SIZE 3   //the size of the memory address used in the memory
 
 //log start-start_of_values-end flags
 ///Start sequence written at the begining of a log
@@ -277,16 +277,18 @@ static void memory_read_status_cb( struct spi_transaction *trans __attribute__ (
 void memory_erase_4k(uint32_t mem_addr){
 
   uint8_t* addr = (uint8_t*) &mem_addr;
+  uint8_t i = 0;
 
   memory_ready = FALSE;
-  msg[0] = 0x21;
-  msg[1] = addr[3];
-  msg[2] = addr[2];
-  msg[3] = addr[1];
-  msg[4] = addr[0];
+  msg[0] = 0x20;    //0x21
+
+  for(i=0; i<MEMORY_ADDRESS_SIZE; i++){
+
+    msg[i+1] = addr[MEMORY_ADDRESS_SIZE-1-i];    
+  }
 
   memory_transaction.output_buf    = (uint8_t*) msg;
-  memory_transaction.output_length = 5;
+  memory_transaction.output_length = MEMORY_ADDRESS_SIZE+1;
 
   memory_transaction.input_buf = NULL;
   memory_transaction.input_length = 0;
@@ -328,11 +330,12 @@ void memory_write_values(uint32_t mem_addr, uint8_t *values, uint8_t size){
   uint8_t i;
 
   memory_ready = FALSE;
-  values_send_buffer[0] = 0x12;
-  values_send_buffer[1] = addr[3];
-  values_send_buffer[2] = addr[2];
-  values_send_buffer[3] = addr[1];
-  values_send_buffer[4] = addr[0];
+  values_send_buffer[0] = 0xAD; //0x12
+
+  for(i=0; i<MEMORY_ADDRESS_SIZE; i++){
+
+    values_send_buffer[i+1] = addr[MEMORY_ADDRESS_SIZE-1-i];    
+  }
 
   for(i=0; i<size; i++){
 
@@ -340,7 +343,7 @@ void memory_write_values(uint32_t mem_addr, uint8_t *values, uint8_t size){
   }
 
   memory_send_value_transaction.output_buf    = (uint8_t*) values_send_buffer;
-  memory_send_value_transaction.output_length = 5+size;
+  memory_send_value_transaction.output_length = MEMORY_ADDRESS_SIZE+1+size;
 
   memory_send_value_transaction.input_buf = NULL;
   memory_send_value_transaction.input_length = 0;
@@ -359,16 +362,20 @@ void memory_write_values(uint32_t mem_addr, uint8_t *values, uint8_t size){
 void memory_read_values(uint32_t mem_addr, uint8_t size){
 
   uint8_t* addr = (uint8_t*) &mem_addr;
+  uint8_t i;
 
   memory_ready = FALSE;
-  msg[0] = 0x13;
-  msg[1] = addr[3];
-  msg[2] = addr[2];
-  msg[3] = addr[1];
-  msg[4] = addr[0];
+  msg[0] = 0x03;  //0x13
+
+
+  for(i=0; i<MEMORY_ADDRESS_SIZE; i++){
+
+    msg[i+1] = addr[MEMORY_ADDRESS_SIZE-1-i];    
+  }
+
 
   memory_transaction.output_buf    = (uint8_t*) msg;
-  memory_transaction.output_length = 5;
+  memory_transaction.output_length = MEMORY_ADDRESS_SIZE+1;
 
   memory_transaction.input_buf = (uint8_t*) uart_read_buff;
   memory_transaction.input_length = size+MEMORY_READ_LATTENCY;  //the first MEMORY_READ_LATTENCY Bytes are lost because of reading to soon
@@ -670,7 +677,7 @@ uint8_t append_values_to_memory(uint8_t *values, uint8_t size){
 
                 if(size_to_write > 250) size_to_write=250;  //protection against overflows in the lower levels
 
-                if(size_to_write > 0){
+                if(size_to_write > 2){
 
                   if(!ml_write_values_to_memory(current_writting_addr, &values[index_value_unwritten], size_to_write)){
 

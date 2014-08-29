@@ -42,6 +42,10 @@
     <!--define name="KILL_ON_GROUND_DETECT" value="TRUE"/-->
   </firmware>
 
+  <modules main_freq="512">
+    <load name="high_speed_logger_direct_memory.xml"/>
+  </modules>
+
   <servos driver="Pwm">
     <servo name="FRONT"   no="0" min="1000" neutral="1100" max="1900"/>
     <servo name="BACK"    no="1" min="1000" neutral="1100" max="1900"/>
