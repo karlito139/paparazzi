@@ -267,7 +267,7 @@ void memory_write_status_1(uint8_t status){
   memory_transaction.output_buf    = (uint8_t*) msg;
   memory_transaction.output_length = 2;
 
-  memory_transaction.input_buf = (NULL;
+  memory_transaction.input_buf = NULL;
   memory_transaction.input_length = 0;
 
   memory_transaction.after_cb = memory_read_status_cb;
@@ -347,16 +347,16 @@ void memory_completly_erase(void){
 void memory_write_values(uint32_t mem_addr, uint8_t *values, uint8_t size){
 
   uint8_t* addr = (uint8_t*) &mem_addr;
-  uint8_t i;
+  uint8_t i, j;
   static uint8_t index_send_values = 0;
 
   memory_ready = FALSE;
-  values_send_buffer[0] = 0xAD; //0x12
+  /*values_send_buffer[0] = 0xAD; //0x12
 
   for(i=0; i<MEMORY_ADDRESS_SIZE; i++){
 
     values_send_buffer[i+1] = addr[MEMORY_ADDRESS_SIZE-1-i];    
-  }
+  }*/
 
   /*for(i=0; i<size; i++){
 
@@ -365,11 +365,23 @@ void memory_write_values(uint32_t mem_addr, uint8_t *values, uint8_t size){
 
   for(i=0; index_send_values<size; i+=3){
 
-    values_send_buffer[i+5] = values[index_send_values];
-    index_send_values++;
+    if(i==0){
+
+      values_send_buffer[i] = 0xAD;
+
+      for(j=0; j<MEMORY_ADDRESS_SIZE; j++){
+
+        values_send_buffer[j+1] = addr[MEMORY_ADDRESS_SIZE-1-j];    
+      }
+    }else{
+
+      values_send_buffer[i+5] = 0xAD;
+    }
+
     values_send_buffer[i+6] = values[index_send_values];
     index_send_values++;
-    values_send_buffer[i+7] = 0xAD;
+    values_send_buffer[i+7] = values[index_send_values];
+    index_send_values++;
   }
 
   values_send_buffer[i+5] = 0x04;
