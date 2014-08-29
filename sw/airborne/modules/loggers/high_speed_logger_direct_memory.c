@@ -375,6 +375,8 @@ void memory_write_values(uint32_t mem_addr, uint8_t *values, uint8_t size){
 
   values_send_buffer[0] = 0x02; //0x12
 
+  mem_addr += index_buffer_send;
+
   /*for(i=0; i<MEMORY_ADDRESS_SIZE; i++){
 
     values_send_buffer[i+1] = addr[MEMORY_ADDRESS_SIZE-1-i];    
