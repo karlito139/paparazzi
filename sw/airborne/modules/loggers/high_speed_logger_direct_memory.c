@@ -167,6 +167,9 @@ uint8_t logging_status_gui;
 
 
 
+uint8_t index_buffer_send = 0;
+
+
 
 static void memory_transaction_done_cb( struct spi_transaction *trans );
 static void memory_read_status_cb( struct spi_transaction *trans );
@@ -369,43 +372,21 @@ void memory_write_values(uint32_t mem_addr, uint8_t *values, uint8_t size){
   static uint8_t index_send_values = 0;
 
   memory_ready = FALSE;
-  /*values_send_buffer[0] = 0xAD; //0x12
+
+  values_send_buffer[0] = 0x02; //0x12
 
   for(i=0; i<MEMORY_ADDRESS_SIZE; i++){
 
     values_send_buffer[i+1] = addr[MEMORY_ADDRESS_SIZE-1-i];    
-  }*/
-
-  /*for(i=0; i<size; i++){
-
-    values_send_buffer[i+5] = values[i];
-  }*/
-
-  for(i=0; index_send_values<size; i+=3){
-
-    if(i==0){
-
-      values_send_buffer[i] = 0xAD;
-
-      for(j=0; j<MEMORY_ADDRESS_SIZE; j++){
-
-        values_send_buffer[j+1] = addr[MEMORY_ADDRESS_SIZE-1-j];    
-      }
-    }else{
-
-      values_send_buffer[i+5] = 0xAD;
-    }
-
-    values_send_buffer[i+6] = values[index_send_values];
-    index_send_values++;
-    values_send_buffer[i+7] = values[index_send_values];
-    index_send_values++;
   }
 
-  values_send_buffer[i+5] = 0x04; //wrdi
+  values_send_buffer[MEMORY_ADDRESS_SIZE] = values[index_buffer_send];
+  index_buffer_send++;
+
+
 
   memory_send_value_transaction.output_buf    = (uint8_t*) values_send_buffer;
-  memory_send_value_transaction.output_length = MEMORY_ADDRESS_SIZE+1+i-2;
+  memory_send_value_transaction.output_length = MEMORY_ADDRESS_SIZE+2;
 
   memory_send_value_transaction.input_buf = NULL;
   memory_send_value_transaction.input_length = 0;
@@ -540,8 +521,16 @@ uint8_t ml_write_values_to_memory(uint32_t mem_addr, uint8_t *values, uint8_t si
              //so we can do it
 
     case 2 : memory_write_values(mem_addr, values, size);
-             ml_write_values_to_memory_status=3;
-             wait_answear_from_reading_memory = 1;
+
+              if(index_buffer_send >= size){
+
+                ml_write_values_to_memory_status=3;
+                wait_answear_from_reading_memory = 1;
+                index_buffer_send = 0;
+              }else{
+
+                ml_write_values_to_memory_status = 1;
+              }
              break;
 
     case 3 :  memory_read_status_1();  //we wait for the writting to be done
