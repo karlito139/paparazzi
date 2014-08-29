@@ -328,6 +328,7 @@ void memory_write_values(uint32_t mem_addr, uint8_t *values, uint8_t size){
 
   uint8_t* addr = (uint8_t*) &mem_addr;
   uint8_t i;
+  extern uint8_t index_send_values = 0;
 
   memory_ready = FALSE;
   values_send_buffer[0] = 0xAD; //0x12
@@ -337,10 +338,20 @@ void memory_write_values(uint32_t mem_addr, uint8_t *values, uint8_t size){
     values_send_buffer[i+1] = addr[MEMORY_ADDRESS_SIZE-1-i];    
   }
 
-  for(i=0; i<size; i++){
+  /*for(i=0; i<size; i++){
 
     values_send_buffer[i+5] = values[i];
+  }*/
+
+  for(i=0; index_send_values<size; i+=2){
+
+    values_send_buffer[i+5] = values[index_send_values];
+    index_send_values++;
+    values_send_buffer[i+6] = values[index_send_values];
+    index_send_values++;
+    values_send_buffer[i+7] = 0xAD;
   }
+
 
   memory_send_value_transaction.output_buf    = (uint8_t*) values_send_buffer;
   memory_send_value_transaction.output_length = MEMORY_ADDRESS_SIZE+1+size;
@@ -565,7 +576,7 @@ uint8_t ml_erase_completely_memory(void){
              break;
 
     case 2 :  memory_read_status_1();  //we wait for the writting to be done
-              if( (wait_answear_from_reading_memory) || (memory_status_byte) ){
+              if( (wait_answear_from_reading_memory) || (memory_status_byte & 0x01) ){
 
                 ml_erase_memory_status=2;
               }
@@ -997,18 +1008,15 @@ uint8_t start_new_log(void){
 
 
     case 1 :  add_array_to_buffer(start_log_sequence, 6);
-              UART1Transmit('o');
               add_byte_to_buffer(SIZE_OF_LOGGED_VALUES);
               start_log_status=2;
               break;
 
     case 2 :  add_array_to_buffer((uint8_t *)msg_names, (SIZE_OF_VALUES_NAMES+1)*NBR_VALUES_TO_LOG);
-              UART1Transmit('r');
               start_log_status=3;
               break;
 
     case 3 :  add_array_to_buffer(start_values_sequence, 3);
-              UART1Transmit('a');
               start_log_status=0;
               return_code=0;
               break;
