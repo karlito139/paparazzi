@@ -1173,9 +1173,9 @@ void high_speed_logger_direct_memory_periodic(void)
 
 
   //SPI part (to log the values on the memory when in flight)
-  //if(memory_ready){
+  if(memory_ready){
 
-    /*switch(logging_status_gui){
+    switch(logging_status_gui){
 
       case 0 :  //idle state, nothing to do
                 break;
@@ -1196,14 +1196,8 @@ void high_speed_logger_direct_memory_periodic(void)
       default : break;
     }
 
-    run_memory_management();*/
-
-    memory_send_wren();
-
-
-  //}
-
-
+    run_memory_management();
+  }
 
   //this function regulats itself, we have to call it at every iteration of the module
   send_buffer_to_uart();
