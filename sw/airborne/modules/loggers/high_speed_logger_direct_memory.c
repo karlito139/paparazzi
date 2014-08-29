@@ -997,15 +997,20 @@ uint8_t start_new_log(void){
 
 
     case 1 :  add_array_to_buffer(start_log_sequence, 6);
+              UART1Transmit('o');
               add_byte_to_buffer(SIZE_OF_LOGGED_VALUES);
               start_log_status=2;
               break;
 
     case 2 :  add_array_to_buffer((uint8_t *)msg_names, (SIZE_OF_VALUES_NAMES+1)*NBR_VALUES_TO_LOG);
+                  UART1Transmit('r');
+
               start_log_status=3;
               break;
 
     case 3 :  add_array_to_buffer(start_values_sequence, 3);
+                  UART1Transmit('a');
+
               start_log_status=0;
               return_code=0;
               break;
