@@ -39,11 +39,11 @@
 /******************************************************************/
 #define READING_BLOCK_SIZE 200  //size of the block that we read in the memory and send over UART. MAX = 250.
 #define ERASE_MEMORY_AT_START 0   // if we completly erase the memory at the start of the log.
-#define SIZE_OF_LOGGED_VALUES 4   // size (in bytes) of the values we log.
+#define SIZE_OF_LOGGED_VALUES 2   // size (in bytes) of the values we log.
 #define SIZE_OF_VALUES_NAMES 10   // size (in characters) of the nameof the logged values.
 #define SKIP_X_CALLS_BETWEEN_VALUES 200  //Skip X values between write. if = 2 we writte a values, then the next two calls to the modules will not add any values to the memory, then the third will add a new values
 
-#define NBR_VALUES_TO_LOG 9   // nbr of messages you want to log
+#define NBR_VALUES_TO_LOG 1   // nbr of messages you want to log
 
 ///list of the messages you want to log
 uint32_t values_to_log[NBR_VALUES_TO_LOG] = {
@@ -52,17 +52,7 @@ uint32_t values_to_log[NBR_VALUES_TO_LOG] = {
   //That list must be pointers to the variables
   //you want to log
 
-  (uint32_t) &imu.accel_unscaled.x,
-  (uint32_t) &imu.accel_unscaled.y,
-  (uint32_t) &imu.accel_unscaled.z,
-
-  (uint32_t) &imu.gyro_unscaled.p,
-  (uint32_t) &imu.gyro_unscaled.q,
-  (uint32_t) &imu.gyro_unscaled.r,
-
-  (uint32_t) &imu.mag_unscaled.x,
-  (uint32_t) &imu.mag_unscaled.y,
-  (uint32_t) &imu.mag_unscaled.z
+  (uint32_t) &imu.accel_unscaled.x
 };
 
 
@@ -70,15 +60,7 @@ uint32_t values_to_log[NBR_VALUES_TO_LOG] = {
 ///list of the names of the messages you are logging
 char **name_of_the_values = (char *[SIZE_OF_VALUES_NAMES]){
 
-  "acc x",
-  "acc y",
-  "acc z",
-  "gyro p",
-  "gyro q",
-  "gyro r",
-  "mag x",
-  "mag y",
-  "mag z"
+  "acc x"
 };
 
 
