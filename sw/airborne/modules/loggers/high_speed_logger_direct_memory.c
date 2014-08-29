@@ -1173,7 +1173,7 @@ void high_speed_logger_direct_memory_periodic(void)
 
 
   //SPI part (to log the values on the memory when in flight)
-  if(memory_ready){
+  //if(memory_ready){
 
     /*switch(logging_status_gui){
 
@@ -1201,7 +1201,7 @@ void high_speed_logger_direct_memory_periodic(void)
     memory_send_wren();
 
 
-  }
+  //}
 
 
 
