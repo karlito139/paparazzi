@@ -41,7 +41,7 @@
 #define ERASE_MEMORY_AT_START 0   // if we completly erase the memory at the start of the log.
 #define SIZE_OF_LOGGED_VALUES 4   // size (in bytes) of the values we log.
 #define SIZE_OF_VALUES_NAMES 10   // size (in characters) of the nameof the logged values.
-#define SKIP_X_CALLS_BETWEEN_VALUES 0  //Skip X values between write. if = 2 we writte a values, then the next two calls to the modules will not add any values to the memory, then the third will add a new values
+#define SKIP_X_CALLS_BETWEEN_VALUES 10  //Skip X values between write. if = 2 we writte a values, then the next two calls to the modules will not add any values to the memory, then the third will add a new values
 
 #define NBR_VALUES_TO_LOG 9   // nbr of messages you want to log
 
@@ -363,7 +363,7 @@ void memory_write_values(uint32_t mem_addr, uint8_t *values, uint8_t size){
     values_send_buffer[i+5] = values[i];
   }*/
 
-  for(i=0; index_send_values<size; i+=2){
+  for(i=0; index_send_values<size; i+=3){
 
     values_send_buffer[i+5] = values[index_send_values];
     index_send_values++;
@@ -372,9 +372,10 @@ void memory_write_values(uint32_t mem_addr, uint8_t *values, uint8_t size){
     values_send_buffer[i+7] = 0xAD;
   }
 
+  values_send_buffer[i+5] = 0x04;
 
   memory_send_value_transaction.output_buf    = (uint8_t*) values_send_buffer;
-  memory_send_value_transaction.output_length = MEMORY_ADDRESS_SIZE+1+size;
+  memory_send_value_transaction.output_length = MEMORY_ADDRESS_SIZE+1+i-2;
 
   memory_send_value_transaction.input_buf = NULL;
   memory_send_value_transaction.input_length = 0;
