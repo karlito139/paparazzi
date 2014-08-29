@@ -1003,14 +1003,12 @@ uint8_t start_new_log(void){
               break;
 
     case 2 :  add_array_to_buffer((uint8_t *)msg_names, (SIZE_OF_VALUES_NAMES+1)*NBR_VALUES_TO_LOG);
-                  UART1Transmit('r');
-
+              UART1Transmit('r');
               start_log_status=3;
               break;
 
     case 3 :  add_array_to_buffer(start_values_sequence, 3);
-                  UART1Transmit('a');
-
+              UART1Transmit('a');
               start_log_status=0;
               return_code=0;
               break;
@@ -1183,6 +1181,7 @@ void high_speed_logger_direct_memory_periodic(void)
                 break;
 
       case 1 :  //start a new log
+                UART1Transmit('p');
                 if(!start_new_log()) logging_status_gui=0;
                 break;
 
