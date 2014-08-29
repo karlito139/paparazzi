@@ -249,7 +249,7 @@ void memory_read_status_1(void){
   memory_transaction.output_length = 1;
 
   memory_transaction.input_buf = (uint8_t*) buff;
-  memory_transaction.input_length = 4;
+  memory_transaction.input_length = 2;
 
   memory_transaction.after_cb = memory_read_status_cb;
 
@@ -274,6 +274,24 @@ void memory_write_status_1(uint8_t status){
 
   spi_submit(&(HIGH_SPEED_LOGGER_DIRECT_MEMORY_DEVICE), &memory_transaction);
 }
+
+
+void memory_send_EWSR(void){
+
+  memory_ready = FALSE;
+  msg[0] = 0x50;
+
+  memory_transaction.output_buf    = (uint8_t*) msg;
+  memory_transaction.output_length = 1;
+
+  memory_transaction.input_buf = NULL;
+  memory_transaction.input_length = 0;
+
+  memory_transaction.after_cb = memory_transaction_done_cb;
+
+  spi_submit(&(HIGH_SPEED_LOGGER_DIRECT_MEMORY_DEVICE), &memory_transaction);
+}
+
 
 
 /** \brief Callback function decrypting the status Byte of the memory.
@@ -384,7 +402,7 @@ void memory_write_values(uint32_t mem_addr, uint8_t *values, uint8_t size){
     index_send_values++;
   }
 
-  values_send_buffer[i+5] = 0x04;
+  values_send_buffer[i+5] = 0x04; //wrdi
 
   memory_send_value_transaction.output_buf    = (uint8_t*) values_send_buffer;
   memory_send_value_transaction.output_length = MEMORY_ADDRESS_SIZE+1+i-2;
@@ -1024,35 +1042,38 @@ uint8_t start_new_log(void){
 
   switch(start_log_status){
 
-    case 0 :  
+    case 0 :  memory_send_EWSR();
               memory_write_status_1(0x00);
+              start_log_status=1;
 
-              current_writting_addr = 0x00000000; //restart the writting at the begining of the memory
+
+
+    case 1 :  current_writting_addr = 0x00000000; //restart the writting at the begining of the memory
               current_unerased_addr = 0x00000000;
 
               if(ERASE_MEMORY_AT_START){
 
                 if(!ml_erase_completely_memory()){
 
-                  start_log_status=1;
+                  start_log_status=2;
                 }
               }else{
 
-                start_log_status=1;
+                start_log_status=2;
               }
               break;
 
 
-    case 1 :  add_array_to_buffer(start_log_sequence, 6);
+    case 2 :  add_array_to_buffer(start_log_sequence, 6);
               add_byte_to_buffer(SIZE_OF_LOGGED_VALUES);
-              start_log_status=2;
-              break;
-
-    case 2 :  add_array_to_buffer((uint8_t *)msg_names, (SIZE_OF_VALUES_NAMES+1)*NBR_VALUES_TO_LOG);
               start_log_status=3;
               break;
 
-    case 3 :  add_array_to_buffer(start_values_sequence, 3);
+    case 3 :  add_array_to_buffer((uint8_t *)msg_names, (SIZE_OF_VALUES_NAMES+1)*NBR_VALUES_TO_LOG);
+              start_log_status=4;
+              break;
+
+    case 4 :  add_array_to_buffer(start_values_sequence, 3);
               start_log_status=0;
               return_code=0;
               break;
