@@ -538,7 +538,7 @@ uint8_t ml_write_values_to_memory(uint32_t mem_addr, uint8_t *values, uint8_t si
               break;
 
     case 3 :  memory_read_status_1();  //we wait for the writting to be done
-              if( (wait_answear_from_reading_memory) || (memory_status_byte) ) ml_write_values_to_memory_status=3;
+              if( (wait_answear_from_reading_memory) || (memory_status_byte & 0x01) ) ml_write_values_to_memory_status=3;
               else ml_write_values_to_memory_status=0; //the writting have been completed
               break;
 
